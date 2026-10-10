@@ -43,8 +43,9 @@ function Hero() {
             Hi, I'm <span className="gradient-text">{profile.name}</span>
           </h1>
           <p className="hero-role">
-            <span className="muted">I'm a</span> <span className="typed">{typed}</span>
+            <span className="muted">I'm a</span> <span className="typed" aria-hidden="true">{typed}</span>
             <span className="caret" />
+            <span className="sr-only">{profile.roles.join(', ')}</span>
           </p>
           <p className="hero-summary">{profile.summary}</p>
           <div className="hero-ctas">

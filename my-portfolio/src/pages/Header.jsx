@@ -17,7 +17,7 @@ function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [progress, setProgress] = useState(0)
-  const [theme, toggleTheme] = useTheme()
+  const [, toggleTheme] = useTheme()
   const active = useActiveSection(sectionIds)
 
   useEffect(() => {
@@ -62,7 +62,9 @@ function Header() {
 
         <div className="header-actions">
           <button className="icon-btn" onClick={toggleTheme} aria-label="Toggle colour theme">
-            <Icon name={theme === 'dark' ? 'sun' : 'moon'} />
+            {/* Both icons render; CSS shows the one for the current theme (keeps pre-rendered HTML identical). */}
+            <Icon name="sun" className="when-dark" />
+            <Icon name="moon" className="when-light" />
           </button>
           <button
             className="icon-btn menu-btn"

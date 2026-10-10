@@ -1,0 +1,21 @@
+{
+  "name": "Samarth Dalela — Software Developer",
+  "short_name": "Samarth",
+  "description": "Portfolio of Samarth Dalela, full-stack software developer at NIELIT HQ, New Delhi.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#07080f",
+  "theme_color": "#07080f",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

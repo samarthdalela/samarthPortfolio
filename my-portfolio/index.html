@@ -7,8 +7,10 @@
     <!-- Primary SEO -->
     <title>Samarth Dalela | Full-Stack Software Developer, New Delhi</title>
     <meta name="description" content="Samarth Dalela – full-stack software developer at NIELIT HQ, New Delhi. Node.js, React, MySQL, Kafka microservices, PWAs, DevOps &amp; OWASP security." />
-    <meta name="keywords" content="Samarth Dalela, Samarth, Samarth Dalela developer, Samarth Dalela portfolio, Samarth Dalela NIELIT, software developer New Delhi, full stack developer India, MERN developer, PERN developer, Node.js developer, React developer, MySQL, PostgreSQL, Prisma, Apache Kafka, microservices, PWA developer, DevOps, Nginx, OWASP" />
+    <meta name="keywords" content="Samarth Dalela, Samarth, Dalela, Samarth Dalela developer, Samarth Dalela portfolio, Samarth Dalela NIELIT, Samarth developer, Samarth software developer, Samarth full stack developer, Samarth portfolio, Samarth NIELIT, Samarth New Delhi, Dalela developer, Dalela software developer, Dalela portfolio, Dalela NIELIT, Dalela New Delhi, software developer New Delhi, full stack developer India, MERN developer, PERN developer, Node.js developer, React developer, MySQL, PostgreSQL, Prisma, Apache Kafka, microservices, PWA developer, DevOps, Nginx, OWASP" />
     <meta name="author" content="Samarth Dalela" />
+    <meta name="application-name" content="Samarth Dalela" />
+    <meta name="apple-mobile-web-app-title" content="Samarth" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <link rel="canonical" href="https://samarthdalela.xyz/" />
     <meta name="theme-color" content="#07080f" />
@@ -18,6 +20,7 @@
     <!-- Icons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Open Graph (LinkedIn, WhatsApp, Facebook, Google) -->
     <meta property="og:type" content="profile" />
@@ -51,7 +54,7 @@
             "name": "Samarth Dalela",
             "givenName": "Samarth",
             "familyName": "Dalela",
-            "alternateName": "Samarth",
+            "alternateName": ["Samarth", "Dalela", "Samarth D."],
             "url": "https://samarthdalela.xyz/",
             "image": "https://samarthdalela.xyz/samarth-dalela.jpg",
             "email": "mailto:samarthdalela@gmail.com",
@@ -72,6 +75,12 @@
               "addressCountry": "IN"
             },
             "knowsLanguage": ["English", "Hindi"],
+            "hasOccupation": {
+              "@type": "Occupation",
+              "name": "Software Developer",
+              "occupationLocation": { "@type": "City", "name": "New Delhi" },
+              "skills": "Node.js, Express.js, React.js, MySQL, PostgreSQL, Prisma, Apache Kafka, Microservices, PWA, Nginx, CI/CD, OWASP Top 10"
+            },
             "knowsAbout": [
               "Full-Stack Web Development", "Node.js", "Express.js", "React.js", "MySQL", "PostgreSQL",
               "MongoDB", "Prisma ORM", "Redis", "Apache Kafka", "Microservices", "Progressive Web Apps",
@@ -87,6 +96,26 @@
             "inLanguage": "en-IN",
             "mainEntity": { "@id": "https://samarthdalela.xyz/#person" },
             "isPartOf": { "@id": "https://samarthdalela.xyz/#website" }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "Website Monitor — Server Uptime PWA",
+            "url": "https://monitorwebsite.netlify.app/",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "Web, Android, iOS (PWA)",
+            "description": "Installable PWA that checks whether servers and websites are up and notifies you when one goes down.",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+            "author": { "@id": "https://samarthdalela.xyz/#person" }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "Special Dates — Birthday & Reminder PWA",
+            "url": "https://impreminder.netlify.app/",
+            "applicationCategory": "LifestyleApplication",
+            "operatingSystem": "Web, Android, iOS (PWA)",
+            "description": "Installable PWA to remember birthdays, anniversaries and special dates, with reminder notifications.",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+            "author": { "@id": "https://samarthdalela.xyz/#person" }
           },
           {
             "@type": "WebSite",
@@ -111,20 +140,8 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
-    <noscript>
-      <h1>Samarth Dalela — Software Developer</h1>
-      <p>
-        Full-stack (MERN / PERN) software developer at NIELIT HQ, New Delhi, with 2 years of experience building
-        web applications, Apache Kafka microservices, a CMS, an AI chatbot, a ticketing system, PWAs and
-        payment-enabled conference websites. Skilled in Node.js, React, MySQL, PostgreSQL, Prisma, Redis, Nginx,
-        CI/CD and OWASP Top 10 security.
-      </p>
-      <p>
-        Contact: <a href="mailto:samarthdalela@gmail.com">samarthdalela@gmail.com</a> ·
-        <a href="/Samarth_Dalela_Resume.pdf">Download resume (PDF)</a>
-      </p>
-    </noscript>
+    <div id="root"><!--app-html--></div>
+    <noscript><style>.reveal { opacity: 1; transform: none; }</style></noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

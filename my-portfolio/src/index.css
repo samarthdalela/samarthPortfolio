@@ -132,6 +132,23 @@ textarea {
   flex-shrink: 0;
 }
 
+:root[data-theme='light'] .when-dark,
+:root:not([data-theme='light']) .when-light {
+  display: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ---------- Buttons & pills ---------- */
 .btn {
   display: inline-flex;
@@ -1406,6 +1423,15 @@ textarea {
   border-top: 1px solid var(--border);
   padding: 28px 0;
   font-size: 14px;
+}
+
+.footer-name {
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.footer a:hover {
+  color: var(--accent);
 }
 
 .footer-inner {

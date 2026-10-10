@@ -72,10 +72,10 @@ export function useTypewriter(words, { typeMs = 70, deleteMs = 40, holdMs = 1600
   return text
 }
 
-// Counts from 0 to `target` once the element is visible.
+// Shows `target` (so pre-rendered HTML has real numbers), then counts up from 0 once visible.
 export function useCountUp(target, decimals = 0, duration = 1400) {
   const ref = useRef(null)
-  const [value, setValue] = useState(0)
+  const [value, setValue] = useState(target)
 
   useEffect(() => {
     const el = ref.current
@@ -105,15 +105,10 @@ export function useCountUp(target, decimals = 0, duration = 1400) {
 
 // Light / dark theme, remembered per browser.
 export function useTheme() {
-  const [theme, setTheme] = useState(() => {
-    try {
-      const saved = localStorage.getItem('theme')
-      if (saved) return saved
-    } catch {
-      // storage unavailable
-    }
-    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
-  })
+  // The inline script in index.html sets data-theme before React loads.
+  const [theme, setTheme] = useState(() =>
+    typeof document === 'undefined' ? 'dark' : document.documentElement.dataset.theme || 'dark',
+  )
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme

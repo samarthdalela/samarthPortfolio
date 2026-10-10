@@ -36,7 +36,13 @@ export function About() {
         <div className="about-grid">
           <div className="portrait reveal">
             <div className="portrait-frame">
-              <img src={photo} alt={profile.name} width="480" height="600" loading="lazy" />
+              <img
+                src={photo}
+                alt="Samarth Dalela, software developer at NIELIT HQ, New Delhi"
+                width="480"
+                height="600"
+                loading="lazy"
+              />
             </div>
             <div className="portrait-tag">
               <span className="pulse" />

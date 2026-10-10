@@ -7,9 +7,15 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="container footer-inner">
-        <p>
-          © {year} {profile.name}. Built with React &amp; Vite.
-        </p>
+        <div>
+          <p className="footer-name">
+            {profile.name} — {profile.role}, {profile.location}
+          </p>
+          <p className="muted">
+            © {year} Samarth Dalela · <a href={`mailto:${profile.email}`}>{profile.email}</a> ·{' '}
+            <a href={profile.resume} download>Resume (PDF)</a>
+          </p>
+        </div>
         <a href="#home" className="icon-btn" aria-label="Back to top">
           <Icon name="arrowUp" />
         </a>
