@@ -330,7 +330,7 @@ export const education = [
 ]
 
 export const achievements = [
-  { title: 'First Position', detail: '3rd year of B.Tech', year: '2023' },
+  { title: 'First Position', detail: 'B.Tech', year: '2024' },
   { title: 'B.Tech Honours Degree', detail: 'Computer Science & Engineering', year: '2024' },
 ]
 
