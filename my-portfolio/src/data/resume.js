@@ -39,7 +39,7 @@ export const skills = [
   {
     group: 'Databases',
     icon: 'database',
-    items: ['MySQL (query & index tuning)', 'PostgreSQL', 'MongoDB', 'Redis (caching)'],
+    items: ['MySQL (query & index tuning)', 'PostgreSQL', 'MongoDB', 'Prisma ORM', 'Redis (caching)'],
   },
   {
     group: 'Architecture',
