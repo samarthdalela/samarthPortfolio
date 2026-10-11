@@ -6,6 +6,7 @@
 // mode insert the rendered page as a picture instead.
 
 import { renderPage } from './pdfjs'
+import { createMedia, esc, imageRun, twips, writeDocx } from './docxWriter'
 
 // Common PDF font names → the font Word should use.
 const knownFonts = {
@@ -70,7 +71,7 @@ export async function readPage(pdfjs, page) {
 }
 
 // Groups pieces into lines, then lines into paragraphs.
-function toLines(items) {
+export function toLines(items) {
   const sorted = [...items].sort((a, b) => a.y - b.y || a.x - b.x)
   const lines = []
   for (const it of sorted) {
@@ -157,13 +158,6 @@ function toRuns(para) {
   return runs
 }
 
-// Drops characters XML 1.0 does not allow (control codes, unpaired surrogates) — PDFs sometimes contain them.
-const xmlAllowed = (c) => c === 9 || c === 10 || c === 13 || (c >= 32 && c < 0xd800) || (c > 0xdfff && c < 0xfffe) || c > 0xffff
-const xmlSafe = (s) => [...s].filter((ch) => xmlAllowed(ch.codePointAt(0))).join('')
-const esc = (s) => xmlSafe(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
-const twips = (pt) => Math.max(0, Math.round(pt * 20))
-const EMU_PER_PT = 12700
-
 function runXml(r) {
   if (r.tab) return '<w:r><w:tab/></w:r>'
   const halfPts = Math.max(2, Math.round(r.size * 2))
@@ -218,16 +212,9 @@ function paragraphXml(para, m, pageBreak) {
 }
 
 function imageXml(rid, n, wPt, hPt, pageBreak) {
-  const cx = Math.round(wPt * EMU_PER_PT)
-  const cy = Math.round(hPt * EMU_PER_PT)
   return (
     `<w:p><w:pPr>${pageBreak ? '<w:pageBreakBefore/>' : ''}<w:spacing w:before="0" w:after="0" w:line="240" w:lineRule="auto"/><w:jc w:val="center"/></w:pPr>` +
-    `<w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0"><wp:extent cx="${cx}" cy="${cy}"/>` +
-    `<wp:docPr id="${n}" name="Page ${n}"/><a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">` +
-    `<pic:pic><pic:nvPicPr><pic:cNvPr id="${n}" name="page${n}.jpeg"/><pic:cNvPicPr/></pic:nvPicPr>` +
-    `<pic:blipFill><a:blip r:embed="${rid}"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill>` +
-    `<pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${cx}" cy="${cy}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr>` +
-    `</pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r></w:p>`
+    `${imageRun(rid, n, wPt, hPt)}</w:p>`
   )
 }
 
@@ -256,17 +243,14 @@ const jpegBytes = async (canvas) =>
 // pages: [{ page (pdf.js), width, height, items, chars }]. mode: 'text' | 'image'.
 // onProgress(i) is called after each page. Returns { blob, textPages, imagePages, paragraphs }.
 export async function buildDocx(pages, mode, onProgress = () => {}) {
-  const { default: JSZip } = await import('jszip')
   const { width, height } = pages[0]
   const scanned = (p) => p.chars < 30
   for (const p of pages) p.lines = mode === 'text' && !scanned(p) ? toLines(p.items) : []
   const m = mode === 'image' ? { left: 0, right: width, top: 0, bottom: 0 } : margins(pages, width)
   m.body = bodySize(pages)
 
-  const zip = new JSZip()
+  const media = createMedia()
   const body = []
-  const rels = []
-  let images = 0
   let paragraphs = 0
   let textPages = 0
 
@@ -279,64 +263,21 @@ export async function buildDocx(pages, mode, onProgress = () => {}) {
       })
     } else {
       const canvas = await renderPage(p.page, 150 / 72)
-      const n = ++images
-      zip.file(`word/media/page${n}.jpeg`, await jpegBytes(canvas))
-      rels.push(`<Relationship Id="rIdImg${n}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/page${n}.jpeg"/>`)
+      const { rid, n } = media.add(await jpegBytes(canvas), 'jpeg')
       // Fit inside the printable area; 2pt slack stops Word pushing an empty line onto a new page.
       const maxW = m.right - m.left
       const maxH = height - m.top - m.bottom - 2
       const k = Math.min(maxW / p.width, maxH / p.height)
-      body.push(imageXml(`rIdImg${n}`, n, p.width * k, p.height * k, i > 0))
+      body.push(imageXml(rid, n, p.width * k, p.height * k, i > 0))
     }
     onProgress(i + 1)
   }
 
-  const landscape = width > height ? ' w:orient="landscape"' : ''
-  const sect =
-    `<w:sectPr><w:pgSz w:w="${twips(width)}" w:h="${twips(height)}"${landscape}/>` +
-    `<w:pgMar w:top="${twips(m.top)}" w:right="${twips(width - m.right)}" w:bottom="${twips(m.bottom)}" w:left="${twips(m.left)}" w:header="0" w:footer="0" w:gutter="0"/></w:sectPr>`
-
-  zip.file(
-    '[Content_Types].xml',
-    '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
-      '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
-      '<Default Extension="xml" ContentType="application/xml"/><Default Extension="jpeg" ContentType="image/jpeg"/>' +
-      '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>' +
-      '<Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>',
-  )
-  zip.file(
-    '_rels/.rels',
-    '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
-      '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>',
-  )
-  zip.file(
-    'word/_rels/document.xml.rels',
-    '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
-      '<Relationship Id="rIdStyles" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>' +
-      rels.join('') +
-      '</Relationships>',
-  )
-  zip.file(
-    'word/styles.xml',
-    '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">' +
-      '<w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:eastAsia="Calibri" w:cs="Calibri"/>' +
-      `<w:sz w:val="${m.body * 2}"/><w:szCs w:val="${m.body * 2}"/><w:lang w:val="en-IN"/></w:rPr></w:rPrDefault>` +
-      '<w:pPrDefault><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults>' +
-      '<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/></w:style></w:styles>',
-  )
-  zip.file(
-    'word/document.xml',
-    '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
-      '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" ' +
-      'xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" ' +
-      'xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">' +
-      `<w:body>${body.join('')}${sect}</w:body></w:document>`,
-  )
-
-  const blob = await zip.generateAsync({
-    type: 'blob',
-    compression: 'DEFLATE',
-    mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  const blob = await writeDocx({
+    body: body.join(''),
+    media,
+    page: { w: width, h: height, top: m.top, right: width - m.right, bottom: m.bottom, left: m.left },
+    defaults: { font: 'Calibri', size: m.body },
   })
-  return { blob, textPages, imagePages: images, paragraphs }
+  return { blob, textPages, imagePages: media.items.length, paragraphs }
 }

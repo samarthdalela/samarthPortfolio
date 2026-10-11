@@ -96,7 +96,7 @@ export function answerQuestion(question) {
   if (hasAny(q, ['contact', 'email', 'mail', 'phone', 'call', 'reach', 'number', 'whatsapp'])) {
     return contactLine
   }
-  if (hasAny(q, ['qr', 'image resizer', 'resize', 'pdf', 'word', 'docx', 'base64', 'heic', 'svg', 'webp', 'convert', 'free tool', 'tools'])) {
+  if (hasAny(q, ['qr', 'image resizer', 'resize', 'pdf', 'word', 'docx', 'base64', 'heic', 'excel', 'csv', 'powerpoint', 'ppt', 'odt', 'rtf', 'txt', 'html', 'svg', 'webp', 'convert', 'free tool', 'tools'])) {
     return `Samarth offers these free tools:\n${list([
       `QR Code Generator: ${SITE}/qr-code-generator/`,
       `WiFi QR Code Generator: ${SITE}/wifi-qr-code-generator/`,
@@ -106,6 +106,7 @@ export function answerQuestion(question) {
       `Word to PDF Converter: ${SITE}/word-to-pdf/`,
       `PDF to Word Converter: ${SITE}/pdf-to-word/`,
       `Image to Base64 / Base64 to Image: ${SITE}/image-to-base64/`,
+      `PDF & document converters (PDF to Excel, Excel to PDF, PDF to PowerPoint, PowerPoint to PDF, Word to HTML, Excel to CSV, CSV to Excel, ODT to DOCX, RTF to PDF, TXT to PDF): ${SITE}/services/`,
       `Image format converters (HEIC, SVG, WebP, GIF, BMP → JPG/PNG/WebP): ${SITE}/services/`,
       'Birthday Reminder app: https://impreminder.netlify.app/',
       'Website Monitor app: https://monitorwebsite.netlify.app/',

@@ -12,6 +12,7 @@ const esc = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g
 const assets = {
   qr: { icon: 'qr', touch: 'apple-touch-qr.png', og: 'og-qr.jpg' },
   resizer: { icon: 'resizer', touch: 'apple-touch-resizer.png', og: 'og-image.jpg' },
+  file: { icon: 'pdf', touch: 'apple-touch-icon.png', og: 'og-image.jpg', svgOnly: true },
 }
 
 function html(p) {
@@ -34,8 +35,7 @@ function html(p) {
     <link rel="canonical" href="${url}" />
     <meta name="theme-color" content="#07080f" />
 
-    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-${a.icon}-48.png" />
-    <link rel="icon" type="image/svg+xml" href="/favicon-${a.icon}.svg" />
+${a.svgOnly ? '' : `    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-${a.icon}-48.png" />\n`}    <link rel="icon" type="image/svg+xml" href="/favicon-${a.icon}.svg" />
     <link rel="apple-touch-icon" href="/${a.touch}" />
     <link rel="manifest" href="/site.webmanifest" />
 

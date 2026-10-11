@@ -40,6 +40,22 @@ const resizer = (page) => ({
   features: [...page.features, ...resizerShared],
 })
 
+const fileShared = [
+  { title: 'Private — nothing is uploaded', text: 'Your file is converted on your own device and never sent to a server. Safe for personal and business documents.' },
+  { title: 'Free, no sign-up, no watermark', text: 'Convert as many files as you like. No account, no limits, no logo added.' },
+  { title: 'Works on phone and computer', text: 'Use it in Chrome, Safari, Edge or Firefox on Android, iPhone, Windows or Mac — no software to install.' },
+]
+
+// Document and file converters (src/convert/), shown on the shared FileConverter screen.
+const file = (page) => ({
+  tool: 'file',
+  category: 'UtilitiesApplication',
+  badges: ['No sign-up', 'No watermark', 'Nothing uploaded', 'Works on mobile'],
+  price: '₹1500 lifetime',
+  ...page,
+  features: [...page.features, ...fileShared],
+})
+
 const kbPage = ({ kb, slug, uses, faqs }) =>
   resizer({
     slug,
@@ -790,11 +806,352 @@ export const landings = [
     ],
     appDescription: 'Free Instagram photo resizer. Resize photos to Instagram post (1080×1080) and story (1080×1920) sizes with fit-with-background or crop-to-fill, plus other social media presets, in the browser.',
   }),
+  file({
+    slug: 'pdf-to-excel',
+    toolProps: { converter: 'pdf-to-excel' },
+    name: 'PDF to Excel Converter',
+    short: 'Extract PDF tables into Excel',
+    title: 'PDF to Excel Converter Online Free – Convert PDF Tables to XLSX',
+    description:
+      'Free PDF to Excel converter: extract tables from PDF bank statements, invoices and reports into an editable Excel (XLSX) file with real numbers. No upload, no sign-up.',
+    keywords: 'pdf to excel, pdf to excel converter, pdf to xlsx, convert pdf to excel, bank statement pdf to excel, pdf table to excel, pdf to excel free, pdf to excel online, extract table from pdf',
+    summary:
+      'Turn tables in a PDF — bank statements, invoices, price lists and reports — into an Excel sheet you can sort, filter and total. Numbers become real numbers. Free, and the PDF never leaves your device.',
+    howToTitle: 'How to convert PDF to Excel',
+    steps: [
+      { name: 'Add your PDF', text: 'Drag and drop the PDF or click to browse. Enter the password if it is protected.' },
+      { name: 'Choose the layout', text: 'Put all pages in one sheet (best for long statements) or give each page its own sheet.' },
+      { name: 'Convert', text: 'Rows and columns are rebuilt from the position of the text on each page.' },
+      { name: 'Download the XLSX', text: 'Open it in Excel, Google Sheets or LibreOffice and check the columns.' },
+    ],
+    featuresTitle: 'Get your PDF data into a spreadsheet',
+    featuresSub: 'Stop retyping numbers from PDFs.',
+    features: [
+      { title: 'Columns detected automatically', text: 'Text is grouped into rows and columns from where it sits on the page.' },
+      { title: 'Real numbers', text: 'Amounts like 1,23,456.00, (45.00) and 12% become numbers you can add up — IDs with leading zeros stay as text.' },
+      { title: 'Bank statements & invoices', text: 'Works with PDFs that have selectable text, like statements downloaded from net banking.' },
+    ],
+    faqTitle: 'PDF to Excel — FAQ',
+    faqs: [
+      { q: 'How do I convert a PDF to Excel?', a: 'Add your PDF above, keep “All pages in one sheet” and press Convert to Excel, then download the XLSX file.' },
+      { q: 'Can I convert a bank statement PDF to Excel?', a: 'Yes. Statements downloaded from net banking have selectable text, so their tables convert well. Enter the PDF password if your bank protects the file.' },
+      { q: 'Does it work with scanned PDFs?', a: 'No. Scanned pages are pictures of text, and text recognition (OCR) is not supported. The PDF needs selectable text.' },
+      { q: 'Why are some columns merged or split?', a: 'Columns are worked out from the spacing of the text. Very tightly spaced or unusual layouts may need a quick tidy-up in Excel.' },
+    ],
+    appDescription: 'Free online PDF to Excel converter. Extracts tables from PDFs with selectable text into XLSX with numbers detected, in the browser with no upload.',
+  }),
+  file({
+    slug: 'excel-to-pdf',
+    toolProps: { converter: 'excel-to-pdf' },
+    name: 'Excel to PDF Converter',
+    short: 'Turn spreadsheets into PDFs',
+    title: 'Excel to PDF Converter Online Free – XLSX, XLS & ODS to PDF',
+    description:
+      'Free Excel to PDF converter: convert XLSX, XLS, ODS and CSV spreadsheets to PDF with every sheet, gridlines and fit-to-width pages. No Excel needed, no upload, no sign-up.',
+    keywords: 'excel to pdf, excel to pdf converter, xlsx to pdf, xls to pdf, convert excel to pdf, spreadsheet to pdf, excel to pdf free, excel to pdf online, ods to pdf, csv to pdf',
+    summary:
+      'Convert Excel spreadsheets to neat PDF pages — every sheet, with gridlines, header rows repeated on each page and wide sheets shrunk to fit. No Excel needed, and nothing is uploaded.',
+    howToTitle: 'How to convert Excel to PDF',
+    steps: [
+      { name: 'Add your spreadsheet', text: 'Drag and drop an XLSX, XLS, ODS or CSV file, or click to browse.' },
+      { name: 'Pick sheets and layout', text: 'Convert all sheets or just the first. Orientation switches to landscape automatically for wide sheets.' },
+      { name: 'Convert', text: 'Each sheet is laid out on pages, splitting long tables between rows.' },
+      { name: 'Download the PDF', text: 'Share or print it — it looks the same on every device.' },
+    ],
+    featuresTitle: 'Print-ready PDFs from spreadsheets',
+    featuresSub: 'For invoices, price lists, timetables, reports and data to share.',
+    features: [
+      { title: 'Fits the page width', text: 'Wide sheets are scaled down to fit, so no columns are cut off.' },
+      { title: 'Header row on every page', text: 'Long tables split between rows and repeat the first row at the top of each page.' },
+      { title: 'All sheets, one PDF', text: 'Every sheet starts on a new page with its name as a heading.' },
+    ],
+    faqTitle: 'Excel to PDF — FAQ',
+    faqs: [
+      { q: 'How do I convert Excel to PDF?', a: 'Add your spreadsheet above. It converts automatically — then click Download PDF.' },
+      { q: 'Do I need Microsoft Excel?', a: 'No. The spreadsheet is read in your browser, so you can convert on any phone or computer.' },
+      { q: 'Are formulas and charts included?', a: 'Formula results are shown as values. Charts, images and cell colours are not included — the PDF shows the data and gridlines.' },
+      { q: 'Can I select text in the PDF?', a: 'The downloaded PDF stores pages as high-quality images. For selectable text, use “Print → Save as PDF” after converting.' },
+    ],
+    appDescription: 'Free online Excel to PDF converter. Converts XLSX, XLS, ODS and CSV sheets to PDF with gridlines, repeated header rows and fit-to-width scaling, in the browser with no upload.',
+  }),
+  file({
+    slug: 'pdf-to-powerpoint',
+    toolProps: { converter: 'pdf-to-powerpoint' },
+    name: 'PDF to PowerPoint Converter',
+    short: 'Turn PDF pages into PPTX slides',
+    title: 'PDF to PowerPoint Converter Online Free – PDF to Editable PPTX',
+    description:
+      'Free PDF to PowerPoint converter: turn every PDF page into a PPTX slide with editable text on the original background, or as exact pictures. No upload, no sign-up.',
+    keywords: 'pdf to ppt, pdf to powerpoint, pdf to pptx, convert pdf to ppt, pdf to powerpoint converter, pdf to ppt free, pdf to editable ppt, pdf to slides, pdf to ppt online',
+    summary:
+      'Convert a PDF into a PowerPoint presentation — one slide per page, with the text as editable text boxes placed over the original design. Free, no sign-up, and the PDF never leaves your device.',
+    howToTitle: 'How to convert PDF to PowerPoint',
+    steps: [
+      { name: 'Add your PDF', text: 'Drag and drop the PDF or click to browse.' },
+      { name: 'Choose editable or exact', text: '“Editable text” lets you change the words; “Exact look” keeps each page as a picture.' },
+      { name: 'Convert', text: 'Every page becomes a slide the same shape as the page.' },
+      { name: 'Download the PPTX', text: 'Open it in PowerPoint, Google Slides or Keynote and present or edit.' },
+    ],
+    featuresTitle: 'Present any PDF as slides',
+    featuresSub: 'For lecture notes, reports, brochures and exported presentations.',
+    features: [
+      { title: 'Editable text', text: 'Text becomes real text boxes in the original font, size, style and colour, on top of the page background.' },
+      { title: 'Keeps the design', text: 'Backgrounds, images and shapes stay in place as the slide background.' },
+      { title: 'Slide size matches the page', text: 'A4 pages, 16:9 exports and other sizes keep their shape.' },
+    ],
+    faqTitle: 'PDF to PowerPoint — FAQ',
+    faqs: [
+      { q: 'How do I convert a PDF to PowerPoint?', a: 'Add your PDF above, keep “Editable text” and press Convert to PowerPoint, then download the PPTX file.' },
+      { q: 'Can I edit the text in the slides?', a: 'Yes, in “Editable text” mode each line of text is a text box you can change. Pictures and shapes stay as the slide background.' },
+      { q: 'Does it work with Google Slides?', a: 'Yes. Upload the PPTX to Google Drive and open it with Google Slides.' },
+      { q: 'What about scanned PDFs?', a: 'Scanned pages have no real text, so they are added as pictures. Text recognition (OCR) is not supported.' },
+    ],
+    appDescription: 'Free online PDF to PowerPoint converter. Turns PDF pages into PPTX slides with editable text over the original background, or as exact pictures, in the browser with no upload.',
+  }),
+  file({
+    slug: 'powerpoint-to-pdf',
+    toolProps: { converter: 'powerpoint-to-pdf' },
+    name: 'PowerPoint to PDF Converter',
+    short: 'Save PPTX slides as a PDF',
+    title: 'PowerPoint to PDF Converter Online Free – PPTX to PDF',
+    description:
+      'Free PowerPoint to PDF converter: convert PPTX presentations to PDF, one slide per page, without PowerPoint. No upload, no sign-up, no watermark.',
+    keywords: 'ppt to pdf, powerpoint to pdf, pptx to pdf, convert ppt to pdf, powerpoint to pdf converter, ppt to pdf free, ppt to pdf online, slides to pdf, presentation to pdf',
+    summary:
+      'Convert PowerPoint presentations to PDF so anyone can open them — one slide per page, at the slide’s own size. No PowerPoint needed, and your file is never uploaded.',
+    howToTitle: 'How to convert PowerPoint to PDF',
+    steps: [
+      { name: 'Add your presentation', text: 'Drag and drop a .pptx file or click to browse.' },
+      { name: 'Pick the quality', text: 'Balanced suits sharing; print quality gives sharper slides for printing.' },
+      { name: 'Convert', text: 'Each slide is drawn and saved as a PDF page.' },
+      { name: 'Download the PDF', text: 'Email, share or print your slides as a PDF.' },
+    ],
+    featuresTitle: 'Share slides as a PDF',
+    featuresSub: 'For handouts, assignments, submissions and email attachments.',
+    features: [
+      { title: 'One slide per page', text: 'Pages keep the slide shape — 16:9, 4:3 or custom.' },
+      { title: 'No PowerPoint needed', text: 'Works on any phone or computer in a modern browser.' },
+      { title: 'Text, shapes and images', text: 'Slide text, pictures, shapes, tables and backgrounds are included.' },
+    ],
+    faqTitle: 'PowerPoint to PDF — FAQ',
+    faqs: [
+      { q: 'How do I convert PowerPoint to PDF?', a: 'Add your .pptx file above. It converts automatically — then click Download PDF.' },
+      { q: 'Does it work with .ppt files?', a: 'Only the modern .pptx format is supported. Open an old .ppt file in PowerPoint or Google Slides and save it as .pptx first.' },
+      { q: 'Are animations and videos kept?', a: 'No. A PDF shows each slide as it looks when fully built; animations, transitions and videos are not included.' },
+      { q: 'Why does a slide look slightly different?', a: 'Fonts not installed on your device are replaced with similar ones, and some advanced effects (3D, SmartArt, special charts) may look simpler.' },
+    ],
+    appDescription: 'Free online PowerPoint to PDF converter. Converts PPTX presentations to PDF with one slide per page at the slide size, in the browser with no upload.',
+  }),
+  file({
+    slug: 'word-to-html',
+    toolProps: { converter: 'word-to-html' },
+    name: 'Word to HTML Converter',
+    short: 'Clean HTML from DOCX files',
+    title: 'Word to HTML Converter Online Free – DOCX to Clean HTML',
+    description:
+      'Free Word to HTML converter: convert DOCX documents to clean, semantic HTML with headings, lists, tables, links and images. Copy the code or download an HTML file. No upload.',
+    keywords: 'word to html, docx to html, word to html converter, convert word to html, word to html clean, doc to html, word to html online, word document to web page, docx to html free',
+    summary:
+      'Turn a Word document into clean HTML for your website, blog or CMS — real headings, lists, tables, links and images, without Word’s messy styling. Copy the code or download a web page.',
+    howToTitle: 'How to convert Word to HTML',
+    steps: [
+      { name: 'Add your Word file', text: 'Drag and drop a .docx document or click to browse.' },
+      { name: 'Choose the output', text: 'A full web page with simple styling, or just the HTML to paste into a CMS.' },
+      { name: 'Check the preview', text: 'See the page rendered next to the code.' },
+      { name: 'Copy or download', text: 'Copy the HTML in one click or download it as an .html file.' },
+    ],
+    featuresTitle: 'Clean HTML, not Word soup',
+    featuresSub: 'For blogs, WordPress, website content, emails and documentation.',
+    features: [
+      { title: 'Semantic markup', text: 'Word headings become h1–h6, lists become ul/ol, and tables stay tables.' },
+      { title: 'Images included', text: 'Pictures are embedded in the HTML, or left out if you prefer to upload them separately.' },
+      { title: 'Live preview', text: 'See exactly how the HTML looks before you copy it.' },
+    ],
+    faqTitle: 'Word to HTML — FAQ',
+    faqs: [
+      { q: 'How do I convert Word to HTML?', a: 'Add your .docx file above. The HTML appears instantly — copy it or download the .html file.' },
+      { q: 'Is the HTML clean?', a: 'Yes. It uses simple semantic tags (headings, paragraphs, lists, tables, links, bold and italic) without Word’s inline styles, so it fits into any website design.' },
+      { q: 'Can I paste it into WordPress?', a: 'Yes. Choose “HTML fragment only”, copy the code and paste it into the code/HTML editor of WordPress or your CMS.' },
+      { q: 'Are fonts and colours kept?', a: 'No — on purpose. Clean HTML keeps the structure and lets your website’s own styles decide the look.' },
+    ],
+    appDescription: 'Free online Word to HTML converter. Converts DOCX documents to clean semantic HTML with headings, lists, tables, links and embedded images, with live preview, in the browser with no upload.',
+  }),
+  file({
+    slug: 'excel-to-csv',
+    toolProps: { converter: 'excel-to-csv' },
+    name: 'Excel to CSV Converter',
+    short: 'Export every sheet as CSV',
+    title: 'Excel to CSV Converter Online Free – XLSX & XLS to CSV',
+    description:
+      'Free Excel to CSV converter: convert XLSX, XLS and ODS sheets to CSV with comma, semicolon or tab separators and Excel-friendly UTF-8. One CSV per sheet. No upload.',
+    keywords: 'excel to csv, xlsx to csv, xls to csv, convert excel to csv, excel to csv converter, excel to csv utf-8, ods to csv, excel to tsv, spreadsheet to csv',
+    summary:
+      'Convert Excel workbooks to CSV — every sheet becomes its own file, with the separator and encoding you need for imports, databases and other apps. Free, and nothing is uploaded.',
+    howToTitle: 'How to convert Excel to CSV',
+    steps: [
+      { name: 'Add your workbook', text: 'Drag and drop an XLSX, XLS or ODS file, or click to browse.' },
+      { name: 'Pick the separator', text: 'Comma for most apps, semicolon for European Excel, or tab for TSV.' },
+      { name: 'Check the preview', text: 'See the first rows of your data before downloading.' },
+      { name: 'Download', text: 'Download one sheet or all of them as CSV files.' },
+    ],
+    featuresTitle: 'CSV files that import cleanly',
+    featuresSub: 'For CRMs, e-commerce stores, databases, mail merges and code.',
+    features: [
+      { title: 'Every sheet', text: 'Each sheet in the workbook becomes a separate CSV file.' },
+      { title: 'UTF-8 that Excel reads', text: 'Accents, ₹ and non-English text open correctly, thanks to the optional BOM.' },
+      { title: 'Shown or raw values', text: 'Keep numbers and dates as formatted in Excel, or export the raw values.' },
+    ],
+    faqTitle: 'Excel to CSV — FAQ',
+    faqs: [
+      { q: 'How do I convert Excel to CSV?', a: 'Add your workbook above. It converts instantly — download each sheet as a CSV.' },
+      { q: 'Why do accented letters look wrong in my CSV?', a: 'Choose “UTF-8 for Excel (with BOM)”. The BOM tells Excel the file is UTF-8 so special characters show correctly.' },
+      { q: 'Should I use comma or semicolon?', a: 'Use comma for most apps and websites. Use semicolon if your Excel uses a comma as the decimal separator (common in Europe).' },
+      { q: 'Are formulas kept?', a: 'CSV stores values only, so formulas are exported as their results.' },
+    ],
+    appDescription: 'Free online Excel to CSV converter. Exports each sheet of XLSX, XLS or ODS workbooks to CSV or TSV with a choice of separator and UTF-8 encoding, in the browser with no upload.',
+  }),
+  file({
+    slug: 'csv-to-excel',
+    toolProps: { converter: 'csv-to-excel' },
+    name: 'CSV to Excel Converter',
+    short: 'Turn CSV files into XLSX',
+    title: 'CSV to Excel Converter Online Free – CSV to XLSX, Multiple Files',
+    description:
+      'Free CSV to Excel converter: convert CSV files to XLSX, XLS or ODS with numbers and dates detected and column widths set. Combine several CSVs into one workbook. No upload.',
+    keywords: 'csv to excel, csv to xlsx, convert csv to excel, csv to excel converter, csv to xls, combine csv files into excel, csv to excel online, csv to excel free, tsv to excel',
+    summary:
+      'Convert CSV files into proper Excel workbooks — numbers and dates detected, columns sized, and several CSVs combined into one file with a sheet each. Free, and nothing is uploaded.',
+    howToTitle: 'How to convert CSV to Excel',
+    steps: [
+      { name: 'Add CSV files', text: 'Drag and drop one or more CSV files, or paste CSV text.' },
+      { name: 'Check the separator', text: 'The separator is detected automatically — comma, semicolon, tab or pipe.' },
+      { name: 'Choose the format', text: 'Save as XLSX, the older XLS, or OpenDocument ODS.' },
+      { name: 'Download', text: 'Open the workbook in Excel, Google Sheets or LibreOffice.' },
+    ],
+    featuresTitle: 'From raw CSV to a ready spreadsheet',
+    featuresSub: 'For exports from banks, stores, CRMs, forms and databases.',
+    features: [
+      { title: 'Several CSVs, one workbook', text: 'Each CSV becomes its own sheet named after the file.' },
+      { title: 'Numbers and dates detected', text: 'Values become real numbers and dates — or keep everything as text to protect IDs and phone numbers.' },
+      { title: 'Readable columns', text: 'Column widths are set from your data, so nothing is hidden.' },
+    ],
+    faqTitle: 'CSV to Excel — FAQ',
+    faqs: [
+      { q: 'How do I convert CSV to Excel?', a: 'Add your CSV file above. It converts instantly — click Download Excel file.' },
+      { q: 'Can I combine multiple CSV files into one Excel file?', a: 'Yes. Add several CSV files at once and each becomes a separate sheet in one workbook.' },
+      { q: 'Why did my phone numbers lose their leading zero?', a: 'Choose “Keep everything as text” under Values. Then IDs, phone numbers and PIN codes stay exactly as written.' },
+      { q: 'Does it handle semicolon-separated files?', a: 'Yes. The separator is detected automatically, or you can pick comma, semicolon, tab or pipe yourself.' },
+    ],
+    appDescription: 'Free online CSV to Excel converter. Converts one or more CSV/TSV files to XLSX, XLS or ODS with automatic separator, number and date detection, in the browser with no upload.',
+  }),
+  file({
+    slug: 'odt-to-docx',
+    toolProps: { converter: 'odt-to-docx' },
+    name: 'ODT to DOCX Converter',
+    short: 'Open LibreOffice files in Word',
+    title: 'ODT to DOCX Converter Online Free – OpenDocument to Word',
+    description:
+      'Free ODT to DOCX converter: convert LibreOffice and OpenOffice documents to Word with headings, formatting, lists, tables and images kept. No upload, no sign-up.',
+    keywords: 'odt to docx, odt to word, convert odt to docx, odt to docx converter, libreoffice to word, openoffice to word, opendocument to docx, odt to doc, odt file to word',
+    summary:
+      'Convert OpenDocument Text (.odt) files from LibreOffice, OpenOffice or Google Docs into Word documents — with headings, fonts, bold and italic, lists, tables, images and page setup. Free, nothing uploaded.',
+    howToTitle: 'How to convert ODT to DOCX',
+    steps: [
+      { name: 'Add your ODT file', text: 'Drag and drop an .odt document or click to browse.' },
+      { name: 'Convert', text: 'Paragraphs, headings, formatting, lists, tables and images are rebuilt as Word content.' },
+      { name: 'Download the DOCX', text: 'Save the Word file to your device.' },
+      { name: 'Open in Word', text: 'Edit it in Microsoft Word, Google Docs, WPS or Pages.' },
+    ],
+    featuresTitle: 'Share LibreOffice documents with Word users',
+    featuresSub: 'For assignments, office documents and forms that must be submitted as .docx.',
+    features: [
+      { title: 'Real Word headings', text: 'ODT headings become Word Heading 1–6, so the navigation pane and table of contents work.' },
+      { title: 'Lists and tables', text: 'Bulleted and numbered lists, tables with merged cells and header rows are carried over.' },
+      { title: 'Page setup kept', text: 'Paper size and margins match the original document.' },
+    ],
+    faqTitle: 'ODT to DOCX — FAQ',
+    faqs: [
+      { q: 'How do I convert ODT to DOCX?', a: 'Add your .odt file above. It converts automatically — then click Download Word file.' },
+      { q: 'What is an ODT file?', a: 'ODT (OpenDocument Text) is the standard document format of LibreOffice Writer and OpenOffice, and Google Docs can export it too.' },
+      { q: 'Is all formatting kept?', a: 'Text formatting, headings, lists, tables, images and page setup are kept. Headers/footers, footnotes, comments and text boxes are not carried over.' },
+      { q: 'Is my document uploaded?', a: 'No. It is converted in your browser and never leaves your device.' },
+    ],
+    appDescription: 'Free online ODT to DOCX converter. Converts OpenDocument Text files to Word with headings, character formatting, lists, tables, images and page setup, in the browser with no upload.',
+  }),
+  file({
+    slug: 'rtf-to-pdf',
+    toolProps: { converter: 'rtf-to-pdf' },
+    name: 'RTF to PDF Converter',
+    short: 'Convert rich text files to PDF',
+    title: 'RTF to PDF Converter Online Free – Rich Text to PDF',
+    description:
+      'Free RTF to PDF converter: convert Rich Text Format files from WordPad, TextEdit or Word to PDF with fonts, formatting, tables and pictures. No upload, no sign-up.',
+    keywords: 'rtf to pdf, rtf to pdf converter, convert rtf to pdf, rich text to pdf, wordpad to pdf, textedit to pdf, rtf file to pdf, rtf to pdf online, rtf to pdf free',
+    summary:
+      'Convert RTF documents to PDF — fonts, sizes, bold and italic, colours, alignment, tables and pictures are kept. Works with files from WordPad, TextEdit and Word. Free, nothing uploaded.',
+    howToTitle: 'How to convert RTF to PDF',
+    steps: [
+      { name: 'Add your RTF file', text: 'Drag and drop an .rtf file or click to browse.' },
+      { name: 'Choose the page', text: 'Pick A4 or Letter, orientation and margins.' },
+      { name: 'Convert', text: 'The text is laid out on pages with its formatting.' },
+      { name: 'Download the PDF', text: 'Share or print the PDF.' },
+    ],
+    featuresTitle: 'Rich text, ready to share',
+    featuresSub: 'For notes, letters and documents saved in WordPad or TextEdit.',
+    features: [
+      { title: 'Formatting kept', text: 'Fonts, sizes, bold, italic, underline, colours, alignment and indents.' },
+      { title: 'Tables and pictures', text: 'Simple tables and PNG/JPEG pictures in the RTF are included.' },
+      { title: 'Page breaks respected', text: 'Manual page breaks start a new PDF page.' },
+    ],
+    faqTitle: 'RTF to PDF — FAQ',
+    faqs: [
+      { q: 'How do I convert RTF to PDF?', a: 'Add your RTF file above. It converts automatically — then click Download PDF.' },
+      { q: 'What is an RTF file?', a: 'RTF (Rich Text Format) is a simple document format made by WordPad, TextEdit and Word that stores text with basic formatting.' },
+      { q: 'Can I select text in the PDF?', a: 'The downloaded PDF stores pages as images. For selectable text, use “Print → Save as PDF” after converting.' },
+      { q: 'Is my file uploaded?', a: 'No. It is converted in your browser.' },
+    ],
+    appDescription: 'Free online RTF to PDF converter. Converts Rich Text Format documents to PDF with fonts, formatting, colours, tables and pictures, in the browser with no upload.',
+  }),
+  file({
+    slug: 'txt-to-pdf',
+    toolProps: { converter: 'txt-to-pdf' },
+    name: 'TXT to PDF Converter',
+    short: 'Turn text files into PDFs',
+    title: 'TXT to PDF Converter Online Free – Text File to PDF',
+    description:
+      'Free TXT to PDF converter: convert text files or pasted text to PDF with your choice of font, size, page size and margins. Works with code and logs. No upload, no sign-up.',
+    keywords: 'txt to pdf, text to pdf, txt to pdf converter, convert txt to pdf, text file to pdf, notepad to pdf, txt to pdf online, txt to pdf free, code to pdf, log to pdf',
+    summary:
+      'Convert a text file — or text you paste — into a clean PDF. Choose the font (including monospace for code), size, page and margins. Long lines wrap and pages break between lines. Free, nothing uploaded.',
+    howToTitle: 'How to convert TXT to PDF',
+    steps: [
+      { name: 'Add text', text: 'Drag and drop a .txt file, or paste text into the box.' },
+      { name: 'Choose the look', text: 'Pick a font, font size, page size, orientation and margins.' },
+      { name: 'Convert', text: 'The text is laid out on pages, keeping blank lines and indentation.' },
+      { name: 'Download the PDF', text: 'Save, share or print it.' },
+    ],
+    featuresTitle: 'Plain text, neat pages',
+    featuresSub: 'For notes, logs, code, lyrics, transcripts and Notepad files.',
+    features: [
+      { title: 'Paste or upload', text: 'Use a .txt file or just paste text — no file needed.' },
+      { title: 'Monospace for code', text: 'A code font keeps columns, indentation and ASCII tables aligned.' },
+      { title: 'Any language', text: 'UTF-8, UTF-16 and older Windows text files open correctly, including Indian languages.' },
+    ],
+    faqTitle: 'TXT to PDF — FAQ',
+    faqs: [
+      { q: 'How do I convert a text file to PDF?', a: 'Add your .txt file above (or paste text), then press Convert to PDF and download the file.' },
+      { q: 'Are blank lines and spaces kept?', a: 'Yes. Line breaks, blank lines, tabs and indentation are kept exactly as in the text.' },
+      { q: 'Can I convert code or log files?', a: 'Yes. Choose the Monospace font so columns and indentation stay aligned.' },
+      { q: 'Can I select text in the PDF?', a: 'The downloaded PDF stores pages as images. For selectable text, use “Print → Save as PDF” after converting.' },
+    ],
+    appDescription: 'Free online TXT to PDF converter. Converts plain-text files or pasted text to PDF with a choice of font, size, page size and margins, in the browser with no upload.',
+  }),
 ]
 
 export const landingUrl = (p) => `${SITE}/${p.slug}/`
 export const qrLandings = landings.filter((p) => p.tool === 'qr')
 export const resizerLandings = landings.filter((p) => p.tool === 'resizer')
+export const fileLandings = landings.filter((p) => p.tool === 'file')
 
 // Links to every tool page, for the "More free tools" section (internal links help each page rank).
 const hubs = [
@@ -811,7 +1168,7 @@ const hubs = [
 export function moreTools(currentPath) {
   const links = [
     ...hubs,
-    ...landings.map((p) => ({ href: `/${p.slug}/`, icon: p.tool === 'qr' ? 'qr' : 'image', name: p.name, text: p.short })),
+    ...landings.map((p) => ({ href: `/${p.slug}/`, icon: { qr: 'qr', file: 'file' }[p.tool] || 'image', name: p.name, text: p.short })),
   ]
-  return { title: 'More free QR code & image tools', links: links.filter((l) => l.href !== currentPath) }
+  return { title: 'More free tools', links: links.filter((l) => l.href !== currentPath) }
 }

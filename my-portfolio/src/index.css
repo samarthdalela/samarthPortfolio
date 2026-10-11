@@ -3082,3 +3082,50 @@ a.tool-card:hover {
     grid-template-columns: 1fr;
   }
 }
+
+/* File converters (FileConverter): pasted text, code output, live preview and data preview */
+.fc-text {
+  min-height: 160px;
+}
+
+.fc-code {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+}
+
+.fc-code .b64-text {
+  min-height: 200px;
+}
+
+.fc-preview {
+  width: 100%;
+  height: 360px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.fc-table-wrap {
+  overflow: auto;
+  max-height: 420px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.fc-table {
+  border-collapse: collapse;
+  font: 12px/1.4 var(--mono);
+  color: var(--text-h);
+}
+
+.fc-table td {
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+
+.fc-table tr:first-child td {
+  background: var(--surface);
+  font-weight: 600;
+}

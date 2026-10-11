@@ -5,7 +5,7 @@ import Support from '../components/Support'
 import SupportPopup from '../components/SupportPopup'
 import { useRevealOnScroll } from '../hooks'
 import { profile } from '../data/resume'
-import { qrLandings, resizerLandings } from '../data/landings'
+import { fileLandings, qrLandings, resizerLandings } from '../data/landings'
 import { toolSections } from '../data/tools'
 
 // Custom software offered as a freelancer, shown in the "Hire me" box.
@@ -32,6 +32,17 @@ Budget:`
 const groups = [
   { title: 'Popular QR code generators', icon: 'qr', pages: qrLandings },
   { title: 'Popular image tools', icon: 'image', pages: resizerLandings },
+  {
+    title: 'Popular PDF & document tools',
+    icon: 'file',
+    pages: [
+      { slug: 'pdf-to-word', name: 'PDF to Word Converter', short: 'Editable DOCX from any PDF' },
+      { slug: 'word-to-pdf', name: 'Word to PDF Converter', short: 'DOCX to PDF, layout kept' },
+      { slug: 'image-to-pdf', name: 'Image to PDF Converter', short: 'Combine photos into one PDF' },
+      { slug: 'pdf-to-image', name: 'PDF to Image Converter', short: 'PDF pages to JPG or PNG' },
+      ...fileLandings,
+    ],
+  },
 ]
 
 function Services() {

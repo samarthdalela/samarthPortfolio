@@ -1,9 +1,10 @@
 import ToolPage from './ToolPage'
 import QrGenerator from '../components/QrGenerator'
 import ImageResizer from '../components/ImageResizer'
+import FileConverter from '../components/FileConverter'
 import { landings, landingUrl, moreTools } from '../data/landings'
 
-const tools = { qr: QrGenerator, resizer: ImageResizer }
+const tools = { qr: QrGenerator, resizer: ImageResizer, file: FileConverter }
 
 // One SEO landing page per tool feature; all content comes from src/data/landings.js.
 function LandingPage({ slug }) {
@@ -14,7 +15,7 @@ function LandingPage({ slug }) {
       {...page}
       url={landingUrl(page)}
       tool={<Tool {...page.toolProps} />}
-      featureIcon={page.tool === 'qr' ? 'qr' : 'image'}
+      featureIcon={{ qr: 'qr', file: 'file' }[page.tool] || 'image'}
       more={moreTools(`/${slug}/`)}
       app={{
         category: page.category,
