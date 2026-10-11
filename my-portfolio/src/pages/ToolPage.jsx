@@ -60,6 +60,8 @@ function ToolPage(props) {
     featureIcon,
     faqTitle,
     faqs,
+    related,
+    more,
   } = props
   useRevealOnScroll()
   const structuredData = buildStructuredData(props)
@@ -94,7 +96,16 @@ function ToolPage(props) {
         </section>
 
         <section className="section services-section" aria-label={`${name} tool`}>
-          <div className="container">{tool}</div>
+          <div className="container">
+            {tool}
+            {related && (
+              <p className="tool-related">
+                <a href={related.href}>
+                  {related.text} <Icon name="arrow" size={14} />
+                </a>
+              </p>
+            )}
+          </div>
         </section>
 
         <section className="section section-alt" id="how-to">
@@ -153,6 +164,29 @@ function ToolPage(props) {
             </div>
           </div>
         </section>
+
+        {more && (
+          <section className="section" id="more-tools">
+            <div className="container">
+              <div className="section-head reveal">
+                <span className="eyebrow">More free tools</span>
+                <h2>{more.title}</h2>
+              </div>
+              <div className="tools-teaser-list more-tools-list">
+                {more.links.map((m) => (
+                  <a key={m.href} href={m.href} className="tools-teaser-item">
+                    <span className="tools-teaser-icon" aria-hidden="true"><Icon name={m.icon} /></span>
+                    <span>
+                      <strong>{m.name}</strong>
+                      <span className="muted">{m.text}</span>
+                    </span>
+                    <Icon name="arrow" size={16} />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         <section className="section">
           <div className="container">

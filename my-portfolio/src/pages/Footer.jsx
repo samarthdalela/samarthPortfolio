@@ -15,7 +15,10 @@ function Footer() {
             © {year} Samarth Dalela · <a href={`mailto:${profile.email}`}>{profile.email}</a> ·{' '}
             <a href={profile.resume} download>Resume (PDF)</a> ·{' '}
             <a href="/qr-code-generator/">Free QR Code Generator</a> ·{' '}
-            <a href="/image-resizer/">Free Image Resizer</a>
+            <a href="/wifi-qr-code-generator/">WiFi QR Code Generator</a> ·{' '}
+            <a href="/image-resizer/">Free Image Resizer</a> ·{' '}
+            <a href="/image-to-pdf/">Image to PDF Converter</a> ·{' '}
+            <a href="/pdf-to-image/">PDF to Image Converter</a>
           </p>
         </div>
         <a href="#top" className="icon-btn" aria-label="Back to top">

@@ -1,6 +1,7 @@
 import ToolPage from './ToolPage'
 import ImageResizer from '../components/ImageResizer'
 import { RESIZER_URL, resizerFaqs, resizerFeatures, resizerSteps } from '../data/imageResizer'
+import { moreTools } from '../data/landings'
 
 function ImageResizerPage() {
   return (
@@ -19,6 +20,7 @@ function ImageResizerPage() {
       featureIcon="image"
       faqTitle="Image resizer — frequently asked questions"
       faqs={resizerFaqs}
+      more={moreTools('/image-resizer/')}
       app={{
         category: 'MultimediaApplication',
         description:

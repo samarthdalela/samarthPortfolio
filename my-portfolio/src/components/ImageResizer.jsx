@@ -121,9 +121,11 @@ function draw(img, w, h, fit, bg, opaqueBg) {
 async function encode(img, size, s) {
   const type = s.format
   const lossy = type !== 'image/png'
-  const opaque = type === 'image/jpeg'
+  // JPG has no transparency; other formats only get a background where "fit" letterboxes the image.
+  const letterbox = s.fit === 'contain' && (s.mode === 'preset' || (s.mode === 'pixels' && !s.lock))
+  const opaque = type === 'image/jpeg' || letterbox
   let { w, h } = size
-  let canvas = draw(img, w, h, s.fit, s.bg, opaque || s.fit === 'contain')
+  let canvas = draw(img, w, h, s.fit, s.bg, opaque)
   const targetBytes = s.targetKB ? s.targetKB * 1024 : 0
 
   if (!targetBytes || !lossy) {
@@ -140,7 +142,7 @@ async function encode(img, size, s) {
       const k = Math.min(0.95, Math.sqrt(targetBytes / smallest.size) * 0.95)
       w = Math.max(16, Math.round(w * k))
       h = Math.max(16, Math.round(h * k))
-      canvas = draw(img, w, h, s.fit, s.bg, opaque || s.fit === 'contain')
+      canvas = draw(img, w, h, s.fit, s.bg, opaque)
       continue
     }
     // Fits at the lowest quality: find the highest quality that still fits.
@@ -164,7 +166,7 @@ async function encode(img, size, s) {
 
 let nextId = 1
 
-function ImageResizer() {
+function ImageResizer({ initial }) {
   const [items, setItems] = useState([])
   const [settings, setSettings] = useState({
     mode: 'pixels',
@@ -178,6 +180,7 @@ function ImageResizer() {
     quality: 0.85,
     targetKB: '',
     bg: '#ffffff',
+    ...initial,
   })
   const [busy, setBusy] = useState(false)
   const [dragging, setDragging] = useState(false)

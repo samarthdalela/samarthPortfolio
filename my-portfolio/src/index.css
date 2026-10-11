@@ -2779,3 +2779,95 @@ a.tool-card:hover {
     transform: none;
   }
 }
+
+/* Cross-link under a tool (e.g. QR generator ↔ Wi-Fi QR generator) */
+.tool-related {
+  margin-top: 18px;
+  text-align: center;
+}
+
+.tool-related a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent, inherit);
+  font-weight: 500;
+}
+
+/* Image to PDF: page order list */
+.pdf-item {
+  cursor: grab;
+}
+
+.pdf-item.is-dragging {
+  opacity: 0.5;
+  border-color: var(--accent);
+}
+
+.pdf-page-num {
+  min-width: 22px;
+  font: 600 13px var(--mono, monospace);
+  color: var(--text-h);
+  text-align: center;
+}
+
+.pdf-item img {
+  object-fit: contain;
+  transition: transform 0.2s;
+}
+
+.pdf-item .icon-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* PDF to image: page list */
+.pdf-page-check input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.pdf-page.is-off {
+  opacity: 0.5;
+}
+
+.pdf-page img {
+  object-fit: contain;
+}
+
+.pdf-thumb-placeholder {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: var(--border);
+  animation: thumbPulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes thumbPulse {
+  to {
+    opacity: 0.4;
+  }
+}
+
+.pdf-password {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid var(--accent);
+  background: var(--accent-soft);
+}
+
+.link-btn {
+  border: none;
+  background: none;
+  padding: 0 2px;
+  color: var(--accent);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: underline;
+}

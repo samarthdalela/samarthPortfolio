@@ -21,10 +21,11 @@ const types = [
       { key: 'ssid', label: 'Network name (SSID)', placeholder: 'My Home WiFi' },
       { key: 'password', label: 'Password', placeholder: '••••••••' },
       { key: 'security', label: 'Security', options: ['WPA', 'WEP', 'nopass'] },
+      { key: 'hidden', label: 'Hidden network', options: ['No', 'Yes'] },
     ],
     build: (v) =>
       v.ssid &&
-      `WIFI:T:${v.security || 'WPA'};S:${wifiEscape(v.ssid)};P:${wifiEscape(v.password || '')};;`,
+      `WIFI:T:${v.security || 'WPA'};S:${wifiEscape(v.ssid)};P:${wifiEscape(v.password || '')};${v.hidden === 'Yes' ? 'H:true;' : ''};`,
   },
   {
     id: 'upi',
@@ -120,8 +121,8 @@ const levels = [
   { id: 'H', label: 'High (30%)' },
 ]
 
-function QrGenerator() {
-  const [typeId, setTypeId] = useState('url')
+function QrGenerator({ initialType = 'url' }) {
+  const [typeId, setTypeId] = useState(initialType)
   const [values, setValues] = useState({ url: { text: 'https://samarthdalela.xyz' } })
   const [fg, setFg] = useState('#0c0f1d')
   const [bg, setBg] = useState('#ffffff')
@@ -211,7 +212,7 @@ function QrGenerator() {
               {f.options ? (
                 <select value={v[f.key] || f.options[0]} onChange={setField(f.key)}>
                   {f.options.map((o) => (
-                    <option key={o} value={o}>{o === 'nopass' ? 'None (open network)' : o}</option>
+                    <option key={o} value={o}>{o === 'nopass' ? 'None (open network)' : o === 'WPA' ? 'WPA / WPA2 / WPA3' : o}</option>
                   ))}
                 </select>
               ) : f.textarea ? (

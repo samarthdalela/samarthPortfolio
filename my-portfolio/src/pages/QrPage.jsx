@@ -1,6 +1,7 @@
 import ToolPage from './ToolPage'
 import QrGenerator from '../components/QrGenerator'
 import { QR_URL, qrFaqs, qrSteps, qrTypes } from '../data/qr'
+import { moreTools } from '../data/landings'
 
 function QrPage() {
   return (
@@ -19,6 +20,7 @@ function QrPage() {
       featureIcon="qr"
       faqTitle="QR code generator — frequently asked questions"
       faqs={qrFaqs}
+      more={moreTools('/qr-code-generator/')}
       app={{
         category: 'UtilitiesApplication',
         description:

@@ -5,6 +5,12 @@ import Support from '../components/Support'
 import SupportPopup from '../components/SupportPopup'
 import { useRevealOnScroll } from '../hooks'
 import { profile } from '../data/resume'
+import { qrLandings, resizerLandings } from '../data/landings'
+
+const groups = [
+  { title: 'Popular QR code generators', icon: 'qr', pages: qrLandings },
+  { title: 'Popular image tools', icon: 'image', pages: resizerLandings },
+]
 
 function Services() {
   useRevealOnScroll()
@@ -66,6 +72,38 @@ function Services() {
                   Open Image Resizer <Icon name="arrow" size={14} />
                 </span>
               </a>
+              <a href="/image-to-pdf/" className="tool-card card reveal">
+                <div className="tool-card-top">
+                  <span className="skill-icon"><Icon name="file" /></span>
+                  <span className="price-tag-inline">
+                    <span className="price-old">₹1500 lifetime</span> <strong>FREE</strong>
+                  </span>
+                </div>
+                <h2>Image to PDF Converter</h2>
+                <p className="muted">
+                  Convert JPG, PNG &amp; WebP to PDF and combine many photos into one PDF. Reorder, rotate, pick A4 or
+                  Letter — nothing is uploaded.
+                </p>
+                <span className="project-link">
+                  Open Image to PDF Converter <Icon name="arrow" size={14} />
+                </span>
+              </a>
+              <a href="/pdf-to-image/" className="tool-card card reveal">
+                <div className="tool-card-top">
+                  <span className="skill-icon"><Icon name="image" /></span>
+                  <span className="price-tag-inline">
+                    <span className="price-old">₹1500 lifetime</span> <strong>FREE</strong>
+                  </span>
+                </div>
+                <h2>PDF to Image Converter</h2>
+                <p className="muted">
+                  Convert PDF pages to JPG, PNG or WebP up to 300 DPI. Pick the pages you need, unlock password-protected
+                  PDFs — nothing is uploaded.
+                </p>
+                <span className="project-link">
+                  Open PDF to Image Converter <Icon name="arrow" size={14} />
+                </span>
+              </a>
               <a
                 href="https://impreminder.netlify.app/"
                 target="_blank"
@@ -116,6 +154,28 @@ function Services() {
             </div>
           </div>
         </section>
+
+        {groups.map((g) => (
+          <section key={g.title} className="section services-section" aria-label={g.title}>
+            <div className="container">
+              <div className="section-head reveal">
+                <h2>{g.title}</h2>
+              </div>
+              <div className="tools-teaser-list more-tools-list">
+                {g.pages.map((p) => (
+                  <a key={p.slug} href={`/${p.slug}/`} className="tools-teaser-item">
+                    <span className="tools-teaser-icon" aria-hidden="true"><Icon name={g.icon} /></span>
+                    <span>
+                      <strong>{p.name}</strong>
+                      <span className="muted">{p.short}</span>
+                    </span>
+                    <Icon name="arrow" size={16} />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </section>
+        ))}
 
         <section className="section section-alt">
           <div className="container">

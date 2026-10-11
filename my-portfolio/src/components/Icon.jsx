@@ -18,6 +18,7 @@ const paths = {
   close: <path d="M6 6l12 12M18 6L6 18" />,
   arrow: <path d="M5 12h14M13 6l6 6-6 6" />,
   arrowUp: <path d="M12 19V5M6 11l6-6 6 6" />,
+  arrowDown: <path d="M12 5v14M6 13l6 6 6-6" />,
   copy: <><rect x="9" y="9" width="12" height="12" rx="2" /><path d="M5 15V5a2 2 0 0 1 2-2h10" /></>,
   check: <path d="M5 12l5 5L20 7" />,
   chevron: <path d="M6 9l6 6 6-6" />,
