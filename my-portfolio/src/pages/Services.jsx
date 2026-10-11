@@ -50,6 +50,48 @@ function Services() {
                   Open QR Code Generator <Icon name="arrow" size={14} />
                 </span>
               </a>
+              <a
+                href="https://impreminder.netlify.app/"
+                target="_blank"
+                rel="noopener"
+                className="tool-card card reveal"
+              >
+                <div className="tool-card-top">
+                  <span className="skill-icon"><span aria-hidden="true">🎂</span></span>
+                  <span className="price-tag-inline">
+                    <strong>FREE</strong> · Installable app
+                  </span>
+                </div>
+                <h2>Special Dates — Birthday Reminder</h2>
+                <p className="muted">
+                  Never miss a birthday, anniversary or special day. Save dates for your family and friends and get
+                  reminder notifications. Install it on your phone like an app.
+                </p>
+                <span className="project-link">
+                  Open Birthday Reminder <Icon name="external" size={14} />
+                </span>
+              </a>
+              <a
+                href="https://monitorwebsite.netlify.app/"
+                target="_blank"
+                rel="noopener"
+                className="tool-card card reveal"
+              >
+                <div className="tool-card-top">
+                  <span className="skill-icon"><span aria-hidden="true">🟢</span></span>
+                  <span className="price-tag-inline">
+                    <strong>FREE</strong> · Installable app
+                  </span>
+                </div>
+                <h2>Website Monitor — Server Uptime</h2>
+                <p className="muted">
+                  Check whether your websites and servers are up or down, and get a notification as soon as one goes
+                  down. Install it on your phone like an app.
+                </p>
+                <span className="project-link">
+                  Open Website Monitor <Icon name="external" size={14} />
+                </span>
+              </a>
               <div className="tool-card tool-card-soon card reveal">
                 <span className="skill-icon"><Icon name="star" /></span>
                 <h2>More tools coming soon</h2>

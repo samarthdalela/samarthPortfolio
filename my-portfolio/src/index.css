@@ -1546,6 +1546,10 @@ a.tool-card:hover {
   justify-self: start;
 }
 
+.tool-card .skill-icon span {
+  font-size: 22px;
+}
+
 .tool-card-soon {
   border-style: dashed;
 }
