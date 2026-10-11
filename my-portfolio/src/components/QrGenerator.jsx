@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import QRCode from 'qrcode'
 import Icon from './Icon'
 import { upiUrl } from '../upi'
+import { promptSupport } from '../support'
 
 // Escapes the characters that have meaning in the Wi-Fi QR format.
 const wifiEscape = (s) => s.replace(/([\\;,:"])/g, '\\$1')
@@ -157,6 +158,7 @@ function QrGenerator() {
     a.href = canvasRef.current.toDataURL('image/png')
     a.download = `${fileName}.png`
     a.click()
+    promptSupport()
   }
 
   const downloadSvg = async () => {
@@ -167,6 +169,7 @@ function QrGenerator() {
     a.download = `${fileName}.svg`
     a.click()
     URL.revokeObjectURL(url)
+    promptSupport()
   }
 
   const copyImage = () => {
@@ -175,6 +178,7 @@ function QrGenerator() {
         await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })])
         setCopied(true)
         setTimeout(() => setCopied(false), 1800)
+        promptSupport()
       } catch {
         downloadPng()
       }

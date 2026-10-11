@@ -13,7 +13,8 @@ const tips = [
 const upiLink = (amount) =>
   upiUrl({ pa: profile.upi, pn: profile.name, am: amount, cu: 'INR', tn: 'Support for free tools' })
 
-function Support() {
+// `inModal` renders a shorter version for the support popup.
+function Support({ inModal = false }) {
   const [tip, setTip] = useState(tips[1])
   const [qr, setQr] = useState('')
   const [copied, setCopied] = useState(false)
@@ -34,15 +35,27 @@ function Support() {
   }
 
   return (
-    <div className="support card reveal" id="support">
+    <div className={inModal ? 'support support-modal' : 'support card reveal'} id={inModal ? undefined : 'support'}>
       <div className="support-copy">
         <span className="eyebrow">Support</span>
-        <h2>Help keep these tools free</h2>
-        <p>
-          I build and run these tools in my free time and keep them free for everyone — no ads, no sign-up. If they
-          helped you, buy me a chai or coffee via Google Pay or any UPI app. Your support keeps me building more free
-          tools. Completely optional.
-        </p>
+        {inModal ? (
+          <>
+            <h2 id="support-popup-title">Buy me a chai or coffee ☕</h2>
+            <p>
+              These tools are free — no ads, no sign-up. A small tip via Google Pay or any UPI app keeps me working on
+              them for free. Completely optional.
+            </p>
+          </>
+        ) : (
+          <>
+            <h2>Help keep these tools free</h2>
+            <p>
+              I build and run these tools in my free time and keep them free for everyone — no ads, no sign-up. If they
+              helped you, buy me a chai or coffee via Google Pay or any UPI app. Your support keeps me building more
+              free tools. Completely optional.
+            </p>
+          </>
+        )}
 
         <div className="tip-options" role="radiogroup" aria-label="Choose an amount">
           {tips.map((t) => (

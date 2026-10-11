@@ -3,6 +3,7 @@ import Footer from './Footer'
 import Icon from '../components/Icon'
 import QrGenerator from '../components/QrGenerator'
 import Support from '../components/Support'
+import SupportPopup from '../components/SupportPopup'
 import { useRevealOnScroll } from '../hooks'
 import { QR_URL, qrFaqs, qrSteps, qrTypes } from '../data/qr'
 
@@ -153,6 +154,7 @@ function QrPage() {
         </section>
       </main>
       <Footer />
+      <SupportPopup />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }}

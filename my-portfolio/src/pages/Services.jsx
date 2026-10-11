@@ -2,6 +2,7 @@ import Header from './Header'
 import Footer from './Footer'
 import Icon from '../components/Icon'
 import Support from '../components/Support'
+import SupportPopup from '../components/SupportPopup'
 import { useRevealOnScroll } from '../hooks'
 import { profile } from '../data/resume'
 
@@ -37,7 +38,7 @@ function Services() {
                 <div className="tool-card-top">
                   <span className="skill-icon"><Icon name="qr" /></span>
                   <span className="price-tag-inline">
-                    <span className="price-old">₹100 lifetime</span> <strong>FREE</strong>
+                    <span className="price-old">₹1000 lifetime</span> <strong>FREE</strong>
                   </span>
                 </div>
                 <h2>QR Code Generator</h2>
@@ -77,6 +78,7 @@ function Services() {
         </section>
       </main>
       <Footer />
+      <SupportPopup />
     </>
   )
 }
