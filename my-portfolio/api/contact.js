@@ -42,6 +42,86 @@ function rateLimited(ip) {
   return recent.length > MAX_PER_WINDOW
 }
 
+// Email-safe HTML (tables + inline styles) so it renders the same in Gmail, Outlook and phone mail apps.
+function emailTemplate({ name, email, subject, message, receivedAt }) {
+  const n = escapeHtml(name)
+  const e = escapeHtml(email)
+  const s = escapeHtml(subject)
+  const m = escapeHtml(message).replace(/\n/g, '<br>')
+  const initial = escapeHtml(name.trim().charAt(0).toUpperCase() || '?')
+  const replyHref = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(`Re: ${subject}`)}`
+  const row = (label, value) => `
+    <tr>
+      <td style="padding:6px 0;width:90px;color:#7d839a;font-size:13px;vertical-align:top">${label}</td>
+      <td style="padding:6px 0;color:#0c0f1d;font-size:14px;font-weight:600">${value}</td>
+    </tr>`
+
+  return `<!doctype html>
+<html>
+<body style="margin:0;padding:0;background:#eef0f8;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+  <div style="display:none;max-height:0;overflow:hidden">${n} sent you a message on Samarth Portfolio: ${s}</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#eef0f8;padding:32px 12px">
+    <tr><td align="center">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(15,23,42,0.08)">
+
+        <!-- Header -->
+        <tr><td style="background:#4f46e5;background-image:linear-gradient(120deg,#4f46e5,#7c3aed 50%,#0891b2);padding:28px 32px">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+            <td style="width:48px">
+              <div style="width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,0.18);color:#fff;font-weight:700;font-size:17px;line-height:44px;text-align:center">SD</div>
+            </td>
+            <td style="padding-left:14px">
+              <div style="color:#ffffff;font-size:20px;font-weight:700">Samarth Portfolio</div>
+              <div style="color:rgba(255,255,255,0.85);font-size:13px">New message from your contact form</div>
+            </td>
+          </tr></table>
+        </td></tr>
+
+        <!-- Sender -->
+        <tr><td style="padding:28px 32px 8px">
+          <table role="presentation" cellpadding="0" cellspacing="0"><tr>
+            <td style="width:52px">
+              <div style="width:48px;height:48px;border-radius:50%;background:#eef0ff;color:#4f46e5;font-weight:700;font-size:20px;line-height:48px;text-align:center">${initial}</div>
+            </td>
+            <td style="padding-left:12px">
+              <div style="color:#0c0f1d;font-size:18px;font-weight:700">${n}</div>
+              <a href="mailto:${e}" style="color:#4f46e5;font-size:14px;text-decoration:none">${e}</a>
+            </td>
+          </tr></table>
+        </td></tr>
+
+        <!-- Details -->
+        <tr><td style="padding:8px 32px">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #eceef5;border-bottom:1px solid #eceef5;padding:8px 0">
+            ${row('Subject', s)}
+            ${row('Received', `${escapeHtml(receivedAt)} IST`)}
+          </table>
+        </td></tr>
+
+        <!-- Message -->
+        <tr><td style="padding:20px 32px 8px">
+          <div style="color:#7d839a;font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px">Message</div>
+          <div style="background:#f7f8fc;border-left:4px solid #4f46e5;border-radius:10px;padding:18px 20px;color:#1f2337;font-size:15px;line-height:1.65">${m}</div>
+        </td></tr>
+
+        <!-- Action -->
+        <tr><td style="padding:24px 32px 32px">
+          <a href="${replyHref}" style="display:inline-block;background:#4f46e5;color:#ffffff;font-size:15px;font-weight:600;text-decoration:none;padding:12px 26px;border-radius:999px">Reply to ${n}</a>
+          <div style="color:#7d839a;font-size:12px;margin-top:12px">Or just hit Reply — it goes straight to ${e}.</div>
+        </td></tr>
+
+        <!-- Footer -->
+        <tr><td style="background:#f7f8fc;padding:18px 32px;color:#7d839a;font-size:12px;line-height:1.6">
+          Sent from the contact form on <a href="https://samarthdalela.xyz/#contact" style="color:#4f46e5;text-decoration:none">samarthdalela.xyz</a> · Samarth Portfolio
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST')
@@ -90,24 +170,31 @@ export default async function handler(req, res) {
   })
 
   const subject = oneLine(data.subject || 'New message')
-  const html = `
-    <div style="font-family:Arial,sans-serif;max-width:600px">
-      <h2 style="margin:0 0 12px">New message from your portfolio</h2>
-      <p><strong>Name:</strong> ${escapeHtml(data.name)}<br>
-      <strong>Email:</strong> <a href="mailto:${escapeHtml(data.email)}">${escapeHtml(data.email)}</a><br>
-      <strong>Subject:</strong> ${escapeHtml(subject)}</p>
-      <div style="padding:12px 16px;background:#f4f5fb;border-radius:8px;white-space:pre-wrap">${escapeHtml(data.message)}</div>
-      <p style="color:#888;font-size:12px">Sent from the contact form on samarthdalela.xyz. Reply to this email to answer ${escapeHtml(data.name)} directly.</p>
-    </div>`
+  const receivedAt = new Date().toLocaleString('en-IN', {
+    timeZone: 'Asia/Kolkata',
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  })
 
   try {
     await transporter.sendMail({
-      from: `"Portfolio Contact" <${SMTP_USER}>`,
+      from: `"Samarth Portfolio" <${SMTP_USER}>`,
       to: CONTACT_TO || SMTP_USER,
       replyTo: { name: oneLine(data.name), address: data.email },
-      subject: `Portfolio: ${subject} — ${oneLine(data.name)}`,
-      text: `Name: ${data.name}\nEmail: ${data.email}\nSubject: ${subject}\n\n${data.message}`,
-      html,
+      subject: `📩 Samarth Portfolio: new message from ${oneLine(data.name)} — ${subject}`,
+      text: [
+        'New message from Samarth Portfolio (samarthdalela.xyz)',
+        '',
+        `Name:     ${data.name}`,
+        `Email:    ${data.email}`,
+        `Subject:  ${subject}`,
+        `Received: ${receivedAt} IST`,
+        '',
+        data.message,
+        '',
+        `Reply to this email to answer ${data.name} directly.`,
+      ].join('\n'),
+      html: emailTemplate({ ...data, subject, receivedAt }),
     })
     return send(res, 200, { ok: true })
   } catch (err) {
