@@ -59,7 +59,7 @@ function Services() {
                 <div className="tool-card-top">
                   <span className="skill-icon"><span aria-hidden="true">🎂</span></span>
                   <span className="price-tag-inline">
-                    <strong>FREE</strong> · Installable app
+                    <span className="price-old">₹500 lifetime</span> <strong>FREE</strong>
                   </span>
                 </div>
                 <h2>Special Dates — Birthday Reminder</h2>
@@ -80,7 +80,7 @@ function Services() {
                 <div className="tool-card-top">
                   <span className="skill-icon"><span aria-hidden="true">🟢</span></span>
                   <span className="price-tag-inline">
-                    <strong>FREE</strong> · Installable app
+                    <span className="price-old">₹4000 lifetime</span> <strong>FREE</strong>
                   </span>
                 </div>
                 <h2>Website Monitor — Server Uptime</h2>
