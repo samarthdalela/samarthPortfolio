@@ -1,7 +1,6 @@
 import { StrictMode } from 'react'
 import { renderToString } from 'react-dom/server'
 import App from './App.jsx'
-import ChatWidget from './components/ChatWidget.jsx'
 import Services from './pages/Services.jsx'
 import QrPage from './pages/QrPage.jsx'
 import ImageResizerPage from './pages/ImageResizerPage.jsx'
@@ -14,7 +13,6 @@ export function render(page) {
   return renderToString(
     <StrictMode>
       <Page />
-      <ChatWidget />
     </StrictMode>,
   )
 }
