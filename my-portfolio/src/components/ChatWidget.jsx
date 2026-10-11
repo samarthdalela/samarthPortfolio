@@ -1,16 +1,21 @@
 import { Fragment, useEffect, useRef, useState } from 'react'
 import Icon from './Icon'
+import { answerQuestion } from '../data/chatAnswers'
 
-const suggestions = [
-  "What are Samarth's main skills?",
-  'Tell me about his Kafka microservices project',
-  'Is he open to new opportunities?',
-  'How can I contact him?',
+// Quick-reply menu shown under every bot reply: button label → question it answers.
+const topics = [
+  ['Skills', 'skills'],
+  ['Projects', 'projects'],
+  ['Experience', 'experience'],
+  ['Education', 'education'],
+  ['Open to work?', 'open to opportunities'],
+  ['Contact', 'contact'],
+  ['Resume', 'resume'],
 ]
 
 const greeting = {
   role: 'assistant',
-  content: "Hi! I'm Samarth's AI assistant. Ask me anything about his skills, projects or experience.",
+  content: "Hi! 👋 I'm Samarth's assistant. Pick a topic below or type your question.",
 }
 
 // Renders **bold**, `code`, links and emails as React nodes (never as raw HTML).
@@ -40,7 +45,7 @@ function ChatWidget() {
   const [busy, setBusy] = useState(false)
   const listRef = useRef(null)
   const inputRef = useRef(null)
-  const abortRef = useRef(null)
+  const timerRef = useRef(null)
 
   useEffect(() => {
     if (open) inputRef.current?.focus()
@@ -53,52 +58,21 @@ function ChatWidget() {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight })
   }, [messages])
 
-  useEffect(() => () => abortRef.current?.abort(), [])
+  useEffect(() => () => clearTimeout(timerRef.current), [])
 
-  const ask = async (question) => {
+  const ask = (question, label = question) => {
     const q = question.trim()
     if (!q || busy) return
-    const history = [...messages, { role: 'user', content: q }]
+    const history = [...messages, { role: 'user', content: label.trim() }]
     setMessages([...history, { role: 'assistant', content: '' }])
     setInput('')
     setBusy(true)
 
-    const controller = new AbortController()
-    abortRef.current = controller
-    const setReply = (fn) =>
-      setMessages((list) => {
-        const next = [...list]
-        const last = next[next.length - 1]
-        next[next.length - 1] = { ...last, ...fn(last) }
-        return next
-      })
-
-    try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        // The greeting is UI-only; send the real conversation.
-        body: JSON.stringify({ messages: history.filter((m) => m !== greeting) }),
-        signal: controller.signal,
-      })
-      if (!res.ok || !res.body) {
-        const data = await res.json().catch(() => ({}))
-        throw new Error(data.error || 'Something went wrong. Please try again.')
-      }
-      const reader = res.body.getReader()
-      const decoder = new TextDecoder()
-      while (true) {
-        const { value, done } = await reader.read()
-        if (done) break
-        const chunk = decoder.decode(value, { stream: true })
-        setReply((last) => ({ content: last.content + chunk }))
-      }
-      setReply((last) => (last.content ? {} : { content: 'Sorry, I could not answer that.', error: true }))
-    } catch (err) {
-      if (err.name !== 'AbortError') setReply(() => ({ content: err.message, error: true }))
-    } finally {
+    // Short pause so the typing indicator shows before the answer appears.
+    timerRef.current = setTimeout(() => {
+      setMessages([...history, { role: 'assistant', content: answerQuestion(q) }])
       setBusy(false)
-    }
+    }, 400)
   }
 
   const onSubmit = (e) => {
@@ -107,7 +81,8 @@ function ChatWidget() {
   }
 
   const reset = () => {
-    abortRef.current?.abort()
+    clearTimeout(timerRef.current)
+    setBusy(false)
     setMessages([greeting])
   }
 
@@ -116,20 +91,20 @@ function ChatWidget() {
       <button
         className={`chat-fab ${open ? 'is-open' : ''}`}
         onClick={() => setOpen((o) => !o)}
-        aria-label={open ? 'Close AI assistant' : 'Ask AI about Samarth'}
+        aria-label={open ? 'Close assistant' : 'Ask about Samarth'}
         aria-expanded={open}
       >
         <Icon name={open ? 'close' : 'chat'} size={22} />
-        {!open && <span className="chat-fab-text">Ask AI about me</span>}
+        {!open && <span className="chat-fab-text">Ask about me</span>}
       </button>
 
       {open && (
-        <section className="chat-panel" role="dialog" aria-label="AI assistant">
+        <section className="chat-panel" role="dialog" aria-label="Chat assistant">
           <header className="chat-head">
             <span className="chat-avatar">SD</span>
             <div>
               <strong>Ask about Samarth</strong>
-              <span>AI assistant · powered by DeepSeek</span>
+              <span>Assistant · answers from his resume</span>
             </div>
             <button className="icon-btn" onClick={reset} aria-label="New chat" title="New chat">
               <Icon name="refresh" size={16} />
@@ -142,10 +117,10 @@ function ChatWidget() {
                 {m.content ? <RichText text={m.content} /> : <span className="chat-typing"><i /><i /><i /></span>}
               </div>
             ))}
-            {messages.length === 1 && (
+            {!busy && (
               <div className="chat-suggestions">
-                {suggestions.map((s) => (
-                  <button key={s} onClick={() => ask(s)}>{s}</button>
+                {topics.map(([label, question]) => (
+                  <button key={label} onClick={() => ask(question, label)}>{label}</button>
                 ))}
               </div>
             )}
@@ -164,7 +139,7 @@ function ChatWidget() {
               <Icon name="send" size={18} />
             </button>
           </form>
-          <p className="chat-note">AI can make mistakes — check important details with Samarth.</p>
+          <p className="chat-note">For anything not covered here, contact Samarth directly.</p>
         </section>
       )}
     </>

@@ -1,5 +1,5 @@
-// Offline answers for the chat assistant, used when DeepSeek is unavailable.
-// Matches the question against keywords and answers from the same resume data as the website.
+// Static answers for the "Ask about Samarth" chat widget, built from the same resume data as the website.
+// Matches the question against keywords; no AI service is involved.
 import {
   achievements,
   certifications,
@@ -9,7 +9,7 @@ import {
   profile,
   projects,
   skills,
-} from '../src/data/resume.js'
+} from './resume.js'
 
 const SITE = 'https://samarthdalela.xyz'
 
@@ -84,7 +84,7 @@ function describeSkill({ item, key, group }) {
   }`
 }
 
-export function fallbackAnswer(question) {
+export function answerQuestion(question) {
   const q = ` ${question.toLowerCase()} `
 
   if (hasAny(q, ['resume', 'cv'])) {

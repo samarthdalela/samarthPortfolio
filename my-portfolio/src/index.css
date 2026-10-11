@@ -2246,15 +2246,15 @@ a.tool-card:hover {
 }
 
 .chat-suggestions {
-  display: grid;
-  gap: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
   margin-top: 4px;
 }
 
 .chat-suggestions button {
-  text-align: left;
-  padding: 9px 12px;
-  border-radius: 12px;
+  padding: 7px 12px;
+  border-radius: 999px;
   border: 1px solid var(--border-strong);
   background: var(--surface);
   color: var(--text-h);
