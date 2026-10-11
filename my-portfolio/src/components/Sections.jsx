@@ -211,21 +211,49 @@ export function Education() {
   )
 }
 
+const freeTools = [
+  { icon: 'qr', name: 'QR Code Generator', text: 'Links, UPI, Wi-Fi, WhatsApp', href: '/qr-code-generator/' },
+  { icon: '🎂', name: 'Birthday Reminder', text: 'Never miss a special day', href: 'https://impreminder.netlify.app/', external: true },
+  { icon: '🟢', name: 'Website Monitor', text: 'Know when a site goes down', href: 'https://monitorwebsite.netlify.app/', external: true },
+]
+
 export function ToolsTeaser() {
   return (
     <section className="tools-teaser-section" aria-label="Free tools">
       <div className="container">
-        <a href="/qr-code-generator/" className="tools-teaser card reveal">
-          <span className="skill-icon"><Icon name="qr" /></span>
-          <div className="tools-teaser-text">
-            <span className="eyebrow">Free tools</span>
-            <h3>Free QR Code Generator</h3>
-            <p className="muted">Links, Wi-Fi, UPI, WhatsApp, contact cards — download PNG or SVG. No sign-up.</p>
+        <div className="tools-teaser card reveal">
+          <div className="tools-teaser-head">
+            <div>
+              <span className="eyebrow">Free tools · for the community</span>
+              <h3>Explore my free tools</h3>
+              <p className="muted">
+                Built to help everyone — 100% free, no sign-up, no ads. Use them as much as you like.
+              </p>
+            </div>
+            <a href="/services/" className="btn btn-primary">
+              Explore all free tools <Icon name="arrow" size={18} />
+            </a>
           </div>
-          <span className="btn btn-primary">
-            Try it free <Icon name="arrow" size={18} />
-          </span>
-        </a>
+          <div className="tools-teaser-list">
+            {freeTools.map((t) => (
+              <a
+                key={t.name}
+                href={t.href}
+                className="tools-teaser-item"
+                {...(t.external ? { target: '_blank', rel: 'noopener' } : {})}
+              >
+                <span className="tools-teaser-icon" aria-hidden="true">
+                  {t.icon === 'qr' ? <Icon name="qr" /> : t.icon}
+                </span>
+                <span>
+                  <strong>{t.name}</strong>
+                  <span className="muted">{t.text}</span>
+                </span>
+                <Icon name={t.external ? 'external' : 'arrow'} size={16} />
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )
