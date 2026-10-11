@@ -67,6 +67,9 @@ function Hero() {
           <div className="floating-chip chip-1">⚡ Kafka</div>
           <div className="floating-chip chip-2">🛡️ OWASP</div>
           <div className="floating-chip chip-3">🐬 MySQL</div>
+          <div className="floating-chip chip-4">🟥 Redis</div>
+          <div className="floating-chip chip-5">⚛️ React</div>
+          <div className="floating-chip chip-6">🟢 Node.js</div>
         </div>
       </div>
 

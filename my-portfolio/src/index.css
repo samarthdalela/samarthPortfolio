@@ -740,6 +740,9 @@ textarea {
 .chip-1 { top: -18px; right: 24px; }
 .chip-2 { bottom: 40px; left: -28px; animation-delay: -1.6s; }
 .chip-3 { bottom: -18px; right: 48px; animation-delay: -3.2s; }
+.chip-4 { top: -18px; left: 40px; animation-delay: -0.8s; }
+.chip-5 { top: 42%; right: -32px; animation-delay: -2.4s; }
+.chip-6 { bottom: -18px; left: 36%; animation-delay: -4s; }
 
 @keyframes bob {
   50% {
@@ -2691,6 +2694,10 @@ a.tool-card:hover {
 
   .chip-2 {
     left: -6px;
+  }
+
+  .chip-5 {
+    right: -6px;
   }
 
   .portrait-tag {
