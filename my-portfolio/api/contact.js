@@ -5,42 +5,16 @@
 //   SMTP_PASS   Gmail app password for SMTP_USER
 //   CONTACT_TO  where messages are delivered (defaults to SMTP_USER)
 import nodemailer from 'nodemailer'
+import { clientIp, createRateLimiter, readBody, send } from './_utils.js'
 
 const LIMITS = { name: 100, email: 200, subject: 150, message: 5000 }
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
-// Basic per-instance rate limit: 5 messages per IP per 10 minutes.
-const WINDOW_MS = 10 * 60 * 1000
-const MAX_PER_WINDOW = 5
-const hits = new Map()
+// 5 messages per IP per 10 minutes.
+const rateLimited = createRateLimiter(5, 10 * 60 * 1000)
 
 const escapeHtml = (s) =>
   s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
-
-const send = (res, status, data) => {
-  res.statusCode = status
-  res.setHeader('Content-Type', 'application/json')
-  res.end(JSON.stringify(data))
-}
-
-async function readBody(req) {
-  if (req.body && typeof req.body === 'object') return req.body
-  if (typeof req.body === 'string') return JSON.parse(req.body || '{}')
-  let raw = ''
-  for await (const chunk of req) {
-    raw += chunk
-    if (raw.length > 20000) throw new Error('Body too large')
-  }
-  return JSON.parse(raw || '{}')
-}
-
-function rateLimited(ip) {
-  const now = Date.now()
-  const recent = (hits.get(ip) || []).filter((t) => now - t < WINDOW_MS)
-  recent.push(now)
-  hits.set(ip, recent)
-  return recent.length > MAX_PER_WINDOW
-}
 
 // Email-safe HTML (tables + inline styles) so it renders the same in Gmail, Outlook and phone mail apps.
 function emailTemplate({ name, email, subject, message, receivedAt }) {
@@ -159,8 +133,7 @@ export default async function handler(req, res) {
   // Header fields must be single-line.
   const oneLine = (s) => s.replace(/[\r\n]+/g, ' ')
 
-  const ip = String(req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown').split(',')[0].trim()
-  if (rateLimited(ip)) {
+  if (rateLimited(clientIp(req))) {
     return send(res, 429, { ok: false, error: 'Too many messages. Please try again in a few minutes.' })
   }
 

@@ -50,6 +50,22 @@ function Services() {
                   Open QR Code Generator <Icon name="arrow" size={14} />
                 </span>
               </a>
+              <a href="/image-resizer/" className="tool-card card reveal">
+                <div className="tool-card-top">
+                  <span className="skill-icon"><Icon name="image" /></span>
+                  <span className="price-tag-inline">
+                    <span className="price-old">₹500 lifetime</span> <strong>FREE</strong>
+                  </span>
+                </div>
+                <h2>Image Resizer</h2>
+                <p className="muted">
+                  Resize photos by pixels, percentage or preset, reduce size to any KB, bulk resize and convert JPG, PNG
+                  &amp; WebP. Nothing is uploaded.
+                </p>
+                <span className="project-link">
+                  Open Image Resizer <Icon name="arrow" size={14} />
+                </span>
+              </a>
               <a
                 href="https://impreminder.netlify.app/"
                 target="_blank"

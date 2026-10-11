@@ -213,6 +213,7 @@ export function Education() {
 
 const freeTools = [
   { icon: 'qr', name: 'QR Code Generator', text: 'Links, UPI, Wi-Fi, WhatsApp', href: '/qr-code-generator/' },
+  { icon: 'image', name: 'Image Resizer', text: 'Resize photos, reduce KB', href: '/image-resizer/' },
   { icon: '🎂', name: 'Birthday Reminder', text: 'Never miss a special day', href: 'https://impreminder.netlify.app/', external: true },
   { icon: '🟢', name: 'Website Monitor', text: 'Know when a site goes down', href: 'https://monitorwebsite.netlify.app/', external: true },
 ]
@@ -243,7 +244,7 @@ export function ToolsTeaser() {
                 {...(t.external ? { target: '_blank', rel: 'noopener' } : {})}
               >
                 <span className="tools-teaser-icon" aria-hidden="true">
-                  {t.icon === 'qr' ? <Icon name="qr" /> : t.icon}
+                  {t.icon === 'qr' || t.icon === 'image' ? <Icon name={t.icon} /> : t.icon}
                 </span>
                 <span>
                   <strong>{t.name}</strong>

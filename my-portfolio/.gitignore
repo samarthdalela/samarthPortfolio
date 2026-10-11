@@ -10,7 +10,11 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
-# *.local
+# Secrets: never commit env files (Vercel reads its own Environment Variables, not these files)
+*.local
+.env
+.env.*
+!.env.example
 
 # Editor directories and files
 .vscode/*

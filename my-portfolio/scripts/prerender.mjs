@@ -9,6 +9,7 @@ const pages = {
   home: 'dist/index.html',
   services: 'dist/services/index.html',
   qr: 'dist/qr-code-generator/index.html',
+  resizer: 'dist/image-resizer/index.html',
 }
 
 for (const [page, file] of Object.entries(pages)) {
