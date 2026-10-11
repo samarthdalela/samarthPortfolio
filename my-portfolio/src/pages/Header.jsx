@@ -13,12 +13,14 @@ const links = [
 ]
 const sectionIds = ['home', ...links.map((l) => l.id)]
 
-function Header() {
+// `page` is 'home' or 'services'; links use "/#id" so they also work from the services page.
+function Header({ page = 'home' }) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [progress, setProgress] = useState(0)
   const [, toggleTheme] = useTheme()
-  const active = useActiveSection(sectionIds)
+  const activeSection = useActiveSection(sectionIds)
+  const active = page === 'services' ? 'services' : activeSection
 
   useEffect(() => {
     const onScroll = () => {
@@ -39,7 +41,7 @@ function Header() {
     <header className={`header ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="scroll-progress" style={{ width: `${progress}%` }} />
       <div className="container header-inner">
-        <a href="#home" className="logo" onClick={() => setOpen(false)}>
+        <a href="/#home" className="logo" onClick={() => setOpen(false)}>
           <span className="logo-mark">{profile.initials}</span>
           <span className="logo-text">{profile.name.split(' ')[0]}<span className="accent">.dev</span></span>
         </a>
@@ -48,13 +50,20 @@ function Header() {
           {links.map((l) => (
             <a
               key={l.id}
-              href={`#${l.id}`}
+              href={`/#${l.id}`}
               className={active === l.id ? 'is-active' : ''}
               onClick={() => setOpen(false)}
             >
               {l.label}
             </a>
           ))}
+          <a
+            href="/services/"
+            className={`nav-services ${active === 'services' ? 'is-active' : ''}`}
+            onClick={() => setOpen(false)}
+          >
+            Free tools
+          </a>
           <a href={profile.resume} download className="btn btn-primary nav-cta" onClick={() => setOpen(false)}>
             <Icon name="download" size={16} /> Resume
           </a>

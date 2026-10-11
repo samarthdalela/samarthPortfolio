@@ -210,3 +210,23 @@ export function Education() {
     </section>
   )
 }
+
+export function ToolsTeaser() {
+  return (
+    <section className="tools-teaser-section" aria-label="Free tools">
+      <div className="container">
+        <a href="/qr-code-generator/" className="tools-teaser card reveal">
+          <span className="skill-icon"><Icon name="qr" /></span>
+          <div className="tools-teaser-text">
+            <span className="eyebrow">Free tools</span>
+            <h3>Free QR Code Generator</h3>
+            <p className="muted">Links, Wi-Fi, UPI, WhatsApp, contact cards — download PNG or SVG. No sign-up.</p>
+          </div>
+          <span className="btn btn-primary">
+            Try it free <Icon name="arrow" size={18} />
+          </span>
+        </a>
+      </div>
+    </section>
+  )
+}

@@ -1,7 +1,7 @@
 import Header from './Header'
 import Footer from './Footer'
 import Hero from '../components/Hero'
-import { About, Education, Experience, Skills } from '../components/Sections'
+import { About, Education, Experience, Skills, ToolsTeaser } from '../components/Sections'
 import Projects from '../components/Projects'
 import Contact from '../components/Contact'
 import { useRevealOnScroll } from '../hooks'
@@ -18,6 +18,7 @@ function Home() {
         <Experience />
         <Projects />
         <Education />
+        <ToolsTeaser />
         <Contact />
       </main>
       <Footer />

@@ -17,6 +17,7 @@ export const profile = {
   email: 'samarthdalela@gmail.com',
   phone: '+91-7898618596',
   resume: '/Samarth_Dalela_Resume.pdf',
+  upi: 'samarthdalela@oksbi',
   summary:
     'Software Developer with 2 years of experience at NIELIT HQ, Delhi, building full-stack web applications, microservices with Apache Kafka, a PostgreSQL-based ticketing system, a CMS, an AI chatbot, payment-enabled conference websites and installable PWA apps.',
   about: [

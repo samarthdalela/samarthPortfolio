@@ -13,10 +13,11 @@ function Footer() {
           </p>
           <p className="muted">
             © {year} Samarth Dalela · <a href={`mailto:${profile.email}`}>{profile.email}</a> ·{' '}
-            <a href={profile.resume} download>Resume (PDF)</a>
+            <a href={profile.resume} download>Resume (PDF)</a> ·{' '}
+            <a href="/qr-code-generator/">Free QR Code Generator</a>
           </p>
         </div>
-        <a href="#home" className="icon-btn" aria-label="Back to top">
+        <a href="#top" className="icon-btn" aria-label="Back to top">
           <Icon name="arrowUp" />
         </a>
       </div>
