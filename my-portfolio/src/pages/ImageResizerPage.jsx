@@ -8,7 +8,7 @@ function ImageResizerPage() {
       name="Image Resizer"
       url={RESIZER_URL}
       summary="Resize images online by pixels, percentage or preset, reduce photo size to any KB, and convert to JPG, PNG or WebP. Bulk resize many images at once — no sign-up, no watermark, nothing uploaded."
-      price="₹500 lifetime"
+      price="₹2000 lifetime"
       badges={['No sign-up', 'No watermark', 'Bulk resize', 'Private — runs in your browser']}
       tool={<ImageResizer />}
       steps={resizerSteps}
