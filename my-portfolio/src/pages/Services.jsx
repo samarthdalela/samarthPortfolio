@@ -1,12 +1,12 @@
+import { useState } from 'react'
 import Header from './Header'
 import Footer from './Footer'
 import Icon from '../components/Icon'
 import Support from '../components/Support'
 import SupportPopup from '../components/SupportPopup'
-import { useRevealOnScroll } from '../hooks'
+import { useActiveSection, useRevealOnScroll } from '../hooks'
 import { profile } from '../data/resume'
-import { fileLandings, qrLandings, resizerLandings } from '../data/landings'
-import { toolSections } from '../data/tools'
+import { categories, featured, toolCount } from '../data/tools'
 
 // Custom software offered as a freelancer, shown in the "Hire me" box.
 const offerings = [
@@ -29,24 +29,16 @@ Main features:
 Deadline:
 Budget:`
 
-const groups = [
-  { title: 'Popular QR code generators', icon: 'qr', pages: qrLandings },
-  { title: 'Popular image tools', icon: 'image', pages: resizerLandings },
-  {
-    title: 'Popular PDF & document tools',
-    icon: 'file',
-    pages: [
-      { slug: 'pdf-to-word', name: 'PDF to Word Converter', short: 'Editable DOCX from any PDF' },
-      { slug: 'word-to-pdf', name: 'Word to PDF Converter', short: 'DOCX to PDF, layout kept' },
-      { slug: 'image-to-pdf', name: 'Image to PDF Converter', short: 'Combine photos into one PDF' },
-      { slug: 'pdf-to-image', name: 'PDF to Image Converter', short: 'PDF pages to JPG or PNG' },
-      ...fileLandings,
-    ],
-  },
-]
+const categoryIds = categories.map((c) => c.id)
 
 function Services() {
   useRevealOnScroll()
+  const active = useActiveSection(categoryIds)
+  // Search filters every category; the page is pre-rendered with all tools listed (good for search engines).
+  const [query, setQuery] = useState('')
+  const q = query.trim().toLowerCase()
+  const visible = categories.map((c) => ({ ...c, shown: c.tools.filter((t) => !q || `${t.name} ${t.text}`.toLowerCase().includes(q)) }))
+  const found = visible.reduce((n, c) => n + c.shown.length, 0)
   return (
     <>
       <Header page="services" />
@@ -67,74 +59,122 @@ function Services() {
               Handy, privacy-friendly tools that run entirely in your browser. Use them as much as you like — free of
               cost, kept free by support from people like you.
             </p>
+            <p className="tools-stats">
+              <strong>{toolCount} free tools</strong> · No sign-up · Your files never leave your device
+            </p>
+            <label className="tools-search">
+              <Icon name="search" size={20} />
+              <input
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search tools — e.g. PDF to Word, HEIC, 50 KB, UPI"
+                aria-label="Search tools"
+              />
+            </label>
           </div>
         </section>
 
-        <section className="section services-section" aria-label="Tools">
-          <div className="container">
-            {toolSections.map((section, si) => (
-              <div key={section.id} id={section.id} className="tool-group">
-                <div className="tool-group-head reveal">
-                  <h2>{section.title}</h2>
-                  {section.sub && <p className="muted">{section.sub}</p>}
-                </div>
-                <div className="tools-grid">
-                  {section.tools.map((t) => (
-                    <a
-                      key={t.href}
-                      href={t.href}
-                      className="tool-card card reveal"
-                      {...(t.external ? { target: '_blank', rel: 'noopener' } : {})}
-                    >
-                      <div className="tool-card-top">
-                        <span className="skill-icon">
-                          {t.emoji ? <span aria-hidden="true">{t.emoji}</span> : <Icon name={t.icon} />}
-                        </span>
-                        <span className="price-tag-inline">
-                          <span className="price-old">{t.price}</span> <strong>FREE</strong>
-                        </span>
-                      </div>
-                      <h3>{t.name}</h3>
-                      <p className="muted">{t.text}</p>
-                      <span className="project-link">
-                        {t.cta || `Open ${t.name}`} <Icon name={t.external ? 'external' : 'arrow'} size={14} />
-                      </span>
-                    </a>
-                  ))}
-                  {si === toolSections.length - 1 && (
-                    <div className="tool-card tool-card-soon card reveal">
-                      <span className="skill-icon"><Icon name="star" /></span>
-                      <h3>More tools coming soon</h3>
-                      <p className="muted">I'm building more free tools. Have an idea? Email me and I may build it next.</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
+        <nav className="tools-nav" aria-label="Tool categories">
+          <div className="container tools-nav-inner">
+            {visible.map(
+              (c) =>
+                c.shown.length > 0 && (
+                  <a key={c.id} href={`#${c.id}`} className={`filter ${active === c.id ? 'is-active' : ''}`}>
+                    {c.short} <span className="tools-nav-count">{c.shown.length}</span>
+                  </a>
+                ),
+            )}
           </div>
-        </section>
+        </nav>
 
-        {groups.map((g) => (
-          <section key={g.title} className="section services-section" aria-label={g.title}>
+        {!q && (
+          <section className="section services-section tools-featured" aria-label="Most used tools">
             <div className="container">
-              <div className="section-head reveal">
-                <h2>{g.title}</h2>
+              <div className="cat-head">
+                <span className="tools-teaser-icon" aria-hidden="true"><Icon name="star" /></span>
+                <div>
+                  <h2>Most used</h2>
+                  <p className="muted">The favourites — each would normally cost a lifetime licence. Here they’re free.</p>
+                </div>
               </div>
-              <div className="tools-teaser-list more-tools-list">
-                {g.pages.map((p) => (
-                  <a key={p.slug} href={`/${p.slug}/`} className="tools-teaser-item">
-                    <span className="tools-teaser-icon" aria-hidden="true"><Icon name={g.icon} /></span>
-                    <span>
-                      <strong>{p.name}</strong>
-                      <span className="muted">{p.short}</span>
+              <div className="featured-grid">
+                {featured.map((t) => (
+                  <a key={t.href} href={t.href} className="tool-card card reveal">
+                    <div className="tool-card-top">
+                      <span className="skill-icon"><Icon name={t.icon} /></span>
+                      <span className="price-tag-inline">
+                        <span className="price-old">{t.price}</span> <strong>FREE</strong>
+                      </span>
+                    </div>
+                    <h3>{t.name}</h3>
+                    <p className="muted">{t.text}</p>
+                    <span className="project-link">
+                      Open tool <Icon name="arrow" size={14} />
                     </span>
-                    <Icon name="arrow" size={16} />
                   </a>
                 ))}
               </div>
             </div>
           </section>
-        ))}
+        )}
+
+        <section className="section services-section tools-catalog" aria-label="All tools">
+          <div className="container">
+            {visible.map(
+              (c) =>
+                c.shown.length > 0 && (
+                  <div key={c.id} id={c.id} className="cat-section">
+                    <div className="cat-head">
+                      <span className="tools-teaser-icon" aria-hidden="true"><Icon name={c.icon} /></span>
+                      <div>
+                        <h2>
+                          {c.title} <span className="cat-count">{c.shown.length}</span>
+                        </h2>
+                        <p className="muted">{c.sub}</p>
+                      </div>
+                    </div>
+                    <div className="tool-tiles">
+                      {c.shown.map((t) => (
+                        <a key={t.href} href={t.href} className="tool-tile" {...(t.external ? { target: '_blank', rel: 'noopener' } : {})}>
+                          <span className="tool-tile-icon" aria-hidden="true">
+                            {t.emoji ? t.emoji : <Icon name={c.icon} size={18} />}
+                          </span>
+                          <span className="tool-tile-text">
+                            <strong>{t.name}</strong>
+                            <span className="muted">{t.text}</span>
+                          </span>
+                          <Icon name={t.external ? 'external' : 'arrow'} size={16} />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                ),
+            )}
+
+            {found === 0 && (
+              <div className="tools-empty card">
+                <p>
+                  No tool matches “<strong>{query}</strong>” yet.
+                </p>
+                <a href={`mailto:${profile.email}?subject=${encodeURIComponent(`Tool idea: ${query}`)}`} className="btn btn-ghost">
+                  <Icon name="mail" size={18} /> Suggest this tool
+                </a>
+              </div>
+            )}
+
+            <div className="tools-suggest card">
+              <span className="skill-icon"><Icon name="star" /></span>
+              <div>
+                <h3>More tools coming soon</h3>
+                <p className="muted">Have an idea for a free tool? Tell me — I may build it next.</p>
+              </div>
+              <a href={`mailto:${profile.email}?subject=${encodeURIComponent('Free tool idea')}`} className="btn btn-ghost">
+                <Icon name="mail" size={18} /> Suggest a tool
+              </a>
+            </div>
+          </div>
+        </section>
 
         <section className="section section-alt">
           <div className="container">
@@ -163,7 +203,7 @@ function Services() {
               </p>
               <div className="hire-actions">
                 <a
-                  href={`https://wa.me/${profile.phone.replace(/D/g, '')}?text=${encodeURIComponent(hireMessage)}`}
+                  href={`https://wa.me/${profile.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(hireMessage)}`}
                   target="_blank"
                   rel="noopener"
                   className="btn btn-primary"
