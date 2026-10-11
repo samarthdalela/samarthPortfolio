@@ -54,7 +54,7 @@ function Services() {
                 <div className="tool-card-top">
                   <span className="skill-icon"><Icon name="image" /></span>
                   <span className="price-tag-inline">
-                    <span className="price-old">₹500 lifetime</span> <strong>FREE</strong>
+                    <span className="price-old">₹2000 lifetime</span> <strong>FREE</strong>
                   </span>
                 </div>
                 <h2>Image Resizer</h2>
