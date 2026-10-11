@@ -18,7 +18,8 @@ function Footer() {
             <a href="/wifi-qr-code-generator/">WiFi QR Code Generator</a> ·{' '}
             <a href="/image-resizer/">Free Image Resizer</a> ·{' '}
             <a href="/image-to-pdf/">Image to PDF Converter</a> ·{' '}
-            <a href="/pdf-to-image/">PDF to Image Converter</a>
+            <a href="/pdf-to-image/">PDF to Image Converter</a> ·{' '}
+            <a href="/word-to-pdf/">Word to PDF Converter</a>
           </p>
         </div>
         <a href="#top" className="icon-btn" aria-label="Back to top">

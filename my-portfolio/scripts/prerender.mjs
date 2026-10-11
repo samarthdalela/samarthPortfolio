@@ -12,6 +12,7 @@ const pages = {
   resizer: 'dist/image-resizer/index.html',
   imageToPdf: 'dist/image-to-pdf/index.html',
   pdfToImage: 'dist/pdf-to-image/index.html',
+  wordToPdf: 'dist/word-to-pdf/index.html',
 }
 
 function bake(file, body) {

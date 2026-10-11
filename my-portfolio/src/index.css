@@ -1574,7 +1574,8 @@ a.tool-card:hover {
   align-items: center;
 }
 
-.tool-card h2 {
+.tool-card h2,
+.tool-card h3 {
   font-size: 24px;
 }
 
@@ -2870,4 +2871,25 @@ a.tool-card:hover {
   font-weight: 500;
   cursor: pointer;
   text-decoration: underline;
+}
+
+/* Free tools page: tool sections (QR & image, PDF, apps) */
+.tool-group + .tool-group {
+  margin-top: 64px;
+}
+
+.tool-group-head {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 22px;
+}
+
+.tool-group-head h2 {
+  font-size: clamp(24px, 3vw, 32px);
+}
+
+@media (min-width: 1000px) {
+  .tool-group .tools-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

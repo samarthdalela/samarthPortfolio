@@ -598,6 +598,7 @@ const hubs = [
   { href: '/image-resizer/', icon: 'image', name: 'Image Resizer', text: 'Resize by pixels, % or preset' },
   { href: '/image-to-pdf/', icon: 'file', name: 'Image to PDF', text: 'Combine photos into one PDF' },
   { href: '/pdf-to-image/', icon: 'image', name: 'PDF to Image', text: 'Save PDF pages as JPG or PNG' },
+  { href: '/word-to-pdf/', icon: 'file', name: 'Word to PDF', text: 'Convert DOCX files to PDF' },
 ]
 
 export function moreTools(currentPath) {

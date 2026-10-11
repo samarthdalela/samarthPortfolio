@@ -96,13 +96,14 @@ export function answerQuestion(question) {
   if (hasAny(q, ['contact', 'email', 'mail', 'phone', 'call', 'reach', 'number', 'whatsapp'])) {
     return contactLine
   }
-  if (hasAny(q, ['qr', 'image resizer', 'resize', 'pdf', 'free tool', 'tools'])) {
+  if (hasAny(q, ['qr', 'image resizer', 'resize', 'pdf', 'word', 'docx', 'free tool', 'tools'])) {
     return `Samarth offers these free tools:\n${list([
       `QR Code Generator: ${SITE}/qr-code-generator/`,
       `WiFi QR Code Generator: ${SITE}/wifi-qr-code-generator/`,
       `Image Resizer: ${SITE}/image-resizer/`,
       `Image to PDF Converter: ${SITE}/image-to-pdf/`,
       `PDF to Image Converter: ${SITE}/pdf-to-image/`,
+      `Word to PDF Converter: ${SITE}/word-to-pdf/`,
       'Birthday Reminder app: https://impreminder.netlify.app/',
       'Website Monitor app: https://monitorwebsite.netlify.app/',
     ])}`

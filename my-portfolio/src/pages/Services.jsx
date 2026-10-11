@@ -6,6 +6,7 @@ import SupportPopup from '../components/SupportPopup'
 import { useRevealOnScroll } from '../hooks'
 import { profile } from '../data/resume'
 import { qrLandings, resizerLandings } from '../data/landings'
+import { toolSections } from '../data/tools'
 
 const groups = [
   { title: 'Popular QR code generators', icon: 'qr', pages: qrLandings },
@@ -39,119 +40,45 @@ function Services() {
 
         <section className="section services-section" aria-label="Tools">
           <div className="container">
-            <div className="tools-grid">
-              <a href="/qr-code-generator/" className="tool-card card reveal">
-                <div className="tool-card-top">
-                  <span className="skill-icon"><Icon name="qr" /></span>
-                  <span className="price-tag-inline">
-                    <span className="price-old">₹1000 lifetime</span> <strong>FREE</strong>
-                  </span>
+            {toolSections.map((section, si) => (
+              <div key={section.id} id={section.id} className="tool-group">
+                <div className="tool-group-head reveal">
+                  <h2>{section.title}</h2>
+                  {section.sub && <p className="muted">{section.sub}</p>}
                 </div>
-                <h2>QR Code Generator</h2>
-                <p className="muted">
-                  QR codes for links, UPI payments, Wi-Fi, WhatsApp, email, phone, SMS and contact cards. Custom
-                  colours, PNG &amp; SVG download.
-                </p>
-                <span className="project-link">
-                  Open QR Code Generator <Icon name="arrow" size={14} />
-                </span>
-              </a>
-              <a href="/image-resizer/" className="tool-card card reveal">
-                <div className="tool-card-top">
-                  <span className="skill-icon"><Icon name="image" /></span>
-                  <span className="price-tag-inline">
-                    <span className="price-old">₹2000 lifetime</span> <strong>FREE</strong>
-                  </span>
+                <div className="tools-grid">
+                  {section.tools.map((t) => (
+                    <a
+                      key={t.href}
+                      href={t.href}
+                      className="tool-card card reveal"
+                      {...(t.external ? { target: '_blank', rel: 'noopener' } : {})}
+                    >
+                      <div className="tool-card-top">
+                        <span className="skill-icon">
+                          {t.emoji ? <span aria-hidden="true">{t.emoji}</span> : <Icon name={t.icon} />}
+                        </span>
+                        <span className="price-tag-inline">
+                          <span className="price-old">{t.price}</span> <strong>FREE</strong>
+                        </span>
+                      </div>
+                      <h3>{t.name}</h3>
+                      <p className="muted">{t.text}</p>
+                      <span className="project-link">
+                        {t.cta || `Open ${t.name}`} <Icon name={t.external ? 'external' : 'arrow'} size={14} />
+                      </span>
+                    </a>
+                  ))}
+                  {si === toolSections.length - 1 && (
+                    <div className="tool-card tool-card-soon card reveal">
+                      <span className="skill-icon"><Icon name="star" /></span>
+                      <h3>More tools coming soon</h3>
+                      <p className="muted">I'm building more free tools. Have an idea? Email me and I may build it next.</p>
+                    </div>
+                  )}
                 </div>
-                <h2>Image Resizer</h2>
-                <p className="muted">
-                  Resize photos by pixels, percentage or preset, reduce size to any KB, bulk resize and convert JPG, PNG
-                  &amp; WebP. Nothing is uploaded.
-                </p>
-                <span className="project-link">
-                  Open Image Resizer <Icon name="arrow" size={14} />
-                </span>
-              </a>
-              <a href="/image-to-pdf/" className="tool-card card reveal">
-                <div className="tool-card-top">
-                  <span className="skill-icon"><Icon name="file" /></span>
-                  <span className="price-tag-inline">
-                    <span className="price-old">₹1500 lifetime</span> <strong>FREE</strong>
-                  </span>
-                </div>
-                <h2>Image to PDF Converter</h2>
-                <p className="muted">
-                  Convert JPG, PNG &amp; WebP to PDF and combine many photos into one PDF. Reorder, rotate, pick A4 or
-                  Letter — nothing is uploaded.
-                </p>
-                <span className="project-link">
-                  Open Image to PDF Converter <Icon name="arrow" size={14} />
-                </span>
-              </a>
-              <a href="/pdf-to-image/" className="tool-card card reveal">
-                <div className="tool-card-top">
-                  <span className="skill-icon"><Icon name="image" /></span>
-                  <span className="price-tag-inline">
-                    <span className="price-old">₹1500 lifetime</span> <strong>FREE</strong>
-                  </span>
-                </div>
-                <h2>PDF to Image Converter</h2>
-                <p className="muted">
-                  Convert PDF pages to JPG, PNG or WebP up to 300 DPI. Pick the pages you need, unlock password-protected
-                  PDFs — nothing is uploaded.
-                </p>
-                <span className="project-link">
-                  Open PDF to Image Converter <Icon name="arrow" size={14} />
-                </span>
-              </a>
-              <a
-                href="https://impreminder.netlify.app/"
-                target="_blank"
-                rel="noopener"
-                className="tool-card card reveal"
-              >
-                <div className="tool-card-top">
-                  <span className="skill-icon"><span aria-hidden="true">🎂</span></span>
-                  <span className="price-tag-inline">
-                    <span className="price-old">₹500 lifetime</span> <strong>FREE</strong>
-                  </span>
-                </div>
-                <h2>Special Dates — Birthday Reminder</h2>
-                <p className="muted">
-                  Never miss a birthday, anniversary or special day. Save dates for your family and friends and get
-                  reminder notifications. Install it on your phone like an app.
-                </p>
-                <span className="project-link">
-                  Open Birthday Reminder <Icon name="external" size={14} />
-                </span>
-              </a>
-              <a
-                href="https://monitorwebsite.netlify.app/"
-                target="_blank"
-                rel="noopener"
-                className="tool-card card reveal"
-              >
-                <div className="tool-card-top">
-                  <span className="skill-icon"><span aria-hidden="true">🟢</span></span>
-                  <span className="price-tag-inline">
-                    <span className="price-old">₹4000 lifetime</span> <strong>FREE</strong>
-                  </span>
-                </div>
-                <h2>Website Monitor — Server Uptime</h2>
-                <p className="muted">
-                  Check whether your websites and servers are up or down, and get a notification as soon as one goes
-                  down. Install it on your phone like an app.
-                </p>
-                <span className="project-link">
-                  Open Website Monitor <Icon name="external" size={14} />
-                </span>
-              </a>
-              <div className="tool-card tool-card-soon card reveal">
-                <span className="skill-icon"><Icon name="star" /></span>
-                <h2>More tools coming soon</h2>
-                <p className="muted">I'm building more free tools. Have an idea? Email me and I may build it next.</p>
               </div>
-            </div>
+            ))}
           </div>
         </section>
 
