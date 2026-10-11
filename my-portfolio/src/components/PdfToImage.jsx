@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Icon from './Icon'
 import { promptSupport } from '../support'
+import { loadPdfjs, renderPage } from '../pdfjs'
 
 const formats = [
   { id: 'image/jpeg', label: 'JPG', ext: 'jpg' },
@@ -15,38 +16,9 @@ const resolutions = [
   { dpi: 300, label: '300 DPI — print quality' },
 ]
 
-// Browsers refuse very large canvases (iOS Safari caps around 16.7 million pixels).
-const MAX_PIXELS = 16_000_000
 const THUMB_WIDTH = 140
 
 const formatBytes = (b) => (b < 1024 ? `${b} B` : b < 1048576 ? `${(b / 1024).toFixed(1)} KB` : `${(b / 1048576).toFixed(2)} MB`)
-
-// pdf.js is large and browser-only, so it is loaded the first time a PDF is opened.
-let pdfjsPromise
-function loadPdfjs() {
-  pdfjsPromise ??= Promise.all([import('pdfjs-dist'), import('pdfjs-dist/build/pdf.worker.min.mjs?url')]).then(
-    ([pdfjs, worker]) => {
-      pdfjs.GlobalWorkerOptions.workerSrc = worker.default
-      return pdfjs
-    },
-  )
-  return pdfjsPromise
-}
-
-// Renders one page onto a white canvas at the given scale (1 = 72 DPI), capped to MAX_PIXELS.
-async function renderPage(page, scale) {
-  let viewport = page.getViewport({ scale })
-  const pixels = viewport.width * viewport.height
-  if (pixels > MAX_PIXELS) viewport = page.getViewport({ scale: scale * Math.sqrt(MAX_PIXELS / pixels) })
-  const canvas = document.createElement('canvas')
-  canvas.width = Math.floor(viewport.width)
-  canvas.height = Math.floor(viewport.height)
-  const ctx = canvas.getContext('2d')
-  ctx.fillStyle = '#ffffff'
-  ctx.fillRect(0, 0, canvas.width, canvas.height)
-  await page.render({ canvasContext: ctx, viewport }).promise
-  return canvas
-}
 
 const toBlob = (canvas, type, quality) => new Promise((resolve) => canvas.toBlob(resolve, type, quality))
 

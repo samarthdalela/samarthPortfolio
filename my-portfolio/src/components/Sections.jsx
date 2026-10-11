@@ -211,11 +211,48 @@ export function Education() {
   )
 }
 
-const freeTools = [
-  { icon: 'qr', name: 'QR Code Generator', text: 'Links, UPI, Wi-Fi, WhatsApp', href: '/qr-code-generator/' },
-  { icon: 'image', name: 'Image Resizer', text: 'Resize photos, reduce KB', href: '/image-resizer/' },
-  { icon: '🎂', name: 'Birthday Reminder', text: 'Never miss a special day', href: 'https://impreminder.netlify.app/', external: true },
-  { icon: '🟢', name: 'Website Monitor', text: 'Know when a site goes down', href: 'https://monitorwebsite.netlify.app/', external: true },
+// Free tools on the home page, grouped by category.
+const toolGroups = [
+  {
+    icon: 'qr',
+    title: 'QR code tools',
+    tools: [
+      { name: 'QR Code Generator', href: '/qr-code-generator/' },
+      { name: 'UPI Payment QR', href: '/upi-qr-code-generator/' },
+      { name: 'Wi-Fi QR Code', href: '/wifi-qr-code-generator/' },
+      { name: 'WhatsApp QR Code', href: '/whatsapp-qr-code-generator/' },
+      { name: 'Business Card (vCard) QR', href: '/vcard-qr-code-generator/' },
+    ],
+  },
+  {
+    icon: 'image',
+    title: 'Image tools',
+    tools: [
+      { name: 'Image Resizer', href: '/image-resizer/' },
+      { name: 'Reduce Image Size in KB', href: '/reduce-image-size-in-kb/' },
+      { name: 'Passport Size Photo', href: '/passport-size-photo-resizer/' },
+      { name: 'JPG to PNG Converter', href: '/jpg-to-png-converter/' },
+      { name: 'Bulk Image Resizer', href: '/bulk-image-resizer/' },
+    ],
+  },
+  {
+    icon: 'file',
+    title: 'PDF tools',
+    tools: [
+      { name: 'Image to PDF', href: '/image-to-pdf/' },
+      { name: 'PDF to Image', href: '/pdf-to-image/' },
+      { name: 'Word to PDF', href: '/word-to-pdf/' },
+      { name: 'PDF to Word', href: '/pdf-to-word/' },
+    ],
+  },
+  {
+    icon: 'gauge',
+    title: 'Apps',
+    tools: [
+      { name: 'Birthday Reminder', href: 'https://impreminder.netlify.app/', external: true },
+      { name: 'Website Monitor', href: 'https://monitorwebsite.netlify.app/', external: true },
+    ],
+  },
 ]
 
 export function ToolsTeaser() {
@@ -235,23 +272,23 @@ export function ToolsTeaser() {
               Explore all free tools <Icon name="arrow" size={18} />
             </a>
           </div>
-          <div className="tools-teaser-list">
-            {freeTools.map((t) => (
-              <a
-                key={t.name}
-                href={t.href}
-                className="tools-teaser-item"
-                {...(t.external ? { target: '_blank', rel: 'noopener' } : {})}
-              >
-                <span className="tools-teaser-icon" aria-hidden="true">
-                  {t.icon === 'qr' || t.icon === 'image' ? <Icon name={t.icon} /> : t.icon}
-                </span>
-                <span>
-                  <strong>{t.name}</strong>
-                  <span className="muted">{t.text}</span>
-                </span>
-                <Icon name={t.external ? 'external' : 'arrow'} size={16} />
-              </a>
+          <div className="tools-cats">
+            {toolGroups.map((g) => (
+              <div key={g.title} className="tools-cat">
+                <h4>
+                  <span className="tools-teaser-icon" aria-hidden="true"><Icon name={g.icon} size={18} /></span>
+                  {g.title}
+                </h4>
+                <ul>
+                  {g.tools.map((t) => (
+                    <li key={t.href}>
+                      <a href={t.href} {...(t.external ? { target: '_blank', rel: 'noopener' } : {})}>
+                        {t.name} <Icon name={t.external ? 'external' : 'arrow'} size={14} />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
         </div>

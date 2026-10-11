@@ -35,6 +35,40 @@ const loadImage = (url) =>
 const toBlob = (canvas, type, quality) =>
   new Promise((resolve) => canvas.toBlob(resolve, type, quality))
 
+const isHeic = (f) => /^image\/hei[cf]/.test(f.type) || /\.hei[cf]$/i.test(f.name)
+const isSvg = (f) => f.type === 'image/svg+xml' || /\.svg$/i.test(f.name)
+
+// Makes files the browser cannot draw as-is drawable:
+// - HEIC/HEIF (iPhone photos): Safari opens them natively; elsewhere they are decoded with libheif (loaded on demand).
+// - SVG without its own width/height has no pixel size, so it gets one from its viewBox.
+async function decodable(file) {
+  if (isHeic(file)) {
+    const url = URL.createObjectURL(file)
+    const native = await loadImage(url).then(() => true, () => false)
+    URL.revokeObjectURL(url)
+    if (native) return file
+    const { heicTo } = await import('heic-to')
+    try {
+      return await heicTo({ blob: file, type: 'image/png' })
+    } catch {
+      throw new Error('This HEIC photo could not be opened.')
+    }
+  }
+  if (isSvg(file)) {
+    const doc = new DOMParser().parseFromString(await file.text(), 'image/svg+xml')
+    const svg = doc.documentElement
+    if (svg.nodeName !== 'svg') throw new Error('This SVG file could not be read.')
+    const sized = (attr) => parseFloat(svg.getAttribute(attr)) > 0 && !String(svg.getAttribute(attr)).includes('%')
+    if (sized('width') && sized('height')) return file
+    const box = (svg.getAttribute('viewBox') || '').split(/[\s,]+/).map(Number)
+    const [w, h] = box.length === 4 && box[2] > 0 && box[3] > 0 ? [box[2], box[3]] : [512, 512]
+    svg.setAttribute('width', w)
+    svg.setAttribute('height', h)
+    return new Blob([new XMLSerializer().serializeToString(doc)], { type: 'image/svg+xml' })
+  }
+  return file
+}
+
 // Final output size for one image, based on the chosen mode.
 function targetSize(img, s) {
   const iw = img.naturalWidth
@@ -166,7 +200,8 @@ async function encode(img, size, s) {
 
 let nextId = 1
 
-function ImageResizer({ initial }) {
+// action: the button verb — "Resize" by default, "Convert" on the format-converter pages.
+function ImageResizer({ initial, action = 'Resize' }) {
   const [items, setItems] = useState([])
   const [settings, setSettings] = useState({
     mode: 'pixels',
@@ -198,11 +233,12 @@ function ImageResizer({ initial }) {
   }
 
   const addFiles = async (fileList) => {
-    const files = [...fileList].filter((f) => f.type.startsWith('image/'))
+    const files = [...fileList].filter((f) => f.type.startsWith('image/') || isHeic(f))
     const added = await Promise.all(
       files.map(async (file) => {
-        const url = URL.createObjectURL(file)
+        let url = ''
         try {
+          url = URL.createObjectURL(await decodable(file))
           const img = await loadImage(url)
           return { id: nextId++, file, url, img, w: img.naturalWidth, h: img.naturalHeight, result: null, error: '' }
         } catch (err) {
@@ -318,7 +354,7 @@ function ImageResizer({ initial }) {
         <input
           ref={inputRef}
           type="file"
-          accept="image/*"
+          accept="image/*,.heic,.heif"
           multiple
           hidden
           onChange={(e) => {
@@ -328,7 +364,7 @@ function ImageResizer({ initial }) {
         />
         <span className="dropzone-icon"><Icon name="image" size={28} /></span>
         <strong>Drop images here or click to browse</strong>
-        <span className="muted">JPG, PNG, WebP, GIF, BMP · multiple images at once · or paste with Ctrl+V</span>
+        <span className="muted">JPG, PNG, WebP, HEIC, SVG, GIF, BMP · multiple images at once · or paste with Ctrl+V</span>
       </div>
 
       <div className="qr-body resizer-body">
@@ -446,7 +482,7 @@ function ImageResizer({ initial }) {
 
           <div className="qr-actions resizer-actions">
             <button className="btn btn-primary" onClick={resizeAll} disabled={!items.some((it) => it.img) || busy}>
-              {busy ? 'Resizing…' : `Resize ${items.length > 1 ? `${items.length} images` : 'image'}`}
+              {busy ? `${action === 'Convert' ? 'Converting' : 'Resizing'}…` : `${action} ${items.length > 1 ? `${items.length} images` : 'image'}`}
             </button>
             {done > 1 && (
               <button className="btn btn-ghost" onClick={downloadAll}>

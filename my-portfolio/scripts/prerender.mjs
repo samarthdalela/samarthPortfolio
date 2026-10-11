@@ -13,6 +13,9 @@ const pages = {
   imageToPdf: 'dist/image-to-pdf/index.html',
   pdfToImage: 'dist/pdf-to-image/index.html',
   wordToPdf: 'dist/word-to-pdf/index.html',
+  pdfToWord: 'dist/pdf-to-word/index.html',
+  imageToBase64: 'dist/image-to-base64/index.html',
+  base64ToImage: 'dist/base64-to-image/index.html',
 }
 
 function bake(file, body) {

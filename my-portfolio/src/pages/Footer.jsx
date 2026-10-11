@@ -19,7 +19,9 @@ function Footer() {
             <a href="/image-resizer/">Free Image Resizer</a> ·{' '}
             <a href="/image-to-pdf/">Image to PDF Converter</a> ·{' '}
             <a href="/pdf-to-image/">PDF to Image Converter</a> ·{' '}
-            <a href="/word-to-pdf/">Word to PDF Converter</a>
+            <a href="/word-to-pdf/">Word to PDF Converter</a> ·{' '}
+            <a href="/pdf-to-word/">PDF to Word Converter</a> ·{' '}
+            <a href="/image-to-base64/">Image to Base64</a>
           </p>
         </div>
         <a href="#top" className="icon-btn" aria-label="Back to top">

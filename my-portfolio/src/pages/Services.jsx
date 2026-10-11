@@ -8,6 +8,27 @@ import { profile } from '../data/resume'
 import { qrLandings, resizerLandings } from '../data/landings'
 import { toolSections } from '../data/tools'
 
+// Custom software offered as a freelancer, shown in the "Hire me" box.
+const offerings = [
+  'CMS — manage your website content',
+  'LMS — online courses & Moodle',
+  'CRM — leads, customers & follow-ups',
+  'ERP & inventory management',
+  'Admin dashboards & reports',
+  'Booking & appointment systems',
+  'E-commerce & payment integration',
+  'PWAs & mobile-friendly web apps',
+  'REST APIs & third-party integrations',
+  'Business websites & landing pages',
+]
+
+const hireMessage = `Hi Samarth, I need custom software.
+
+What I need (CMS / LMS / CRM / website / other):
+Main features:
+Deadline:
+Budget:`
+
 const groups = [
   { title: 'Popular QR code generators', icon: 'qr', pages: qrLandings },
   { title: 'Popular image tools', icon: 'image', pages: resizerLandings },
@@ -108,16 +129,46 @@ function Services() {
           <div className="container">
             <Support />
 
-            <div className="custom-cta card reveal">
-              <div>
-                <h3>Need a custom tool or website?</h3>
-                <p className="muted">
-                  I build web apps, PWAs, CMSs and APIs. Tell me what you need.
-                </p>
+            <div className="hire card reveal" id="hire">
+              <span className="badge">
+                <span className="pulse" /> Available for freelance projects
+              </span>
+              <h2>Need custom software for your business?</h2>
+              <p className="muted hire-lead">
+                I build CMS, LMS, CRM and other custom software tailored to your needs and budget — from a simple
+                website to a complete business system. Share your requirements and I’ll suggest the right solution,
+                timeline and cost.
+              </p>
+              <ul className="hire-list">
+                {offerings.map((o) => (
+                  <li key={o}>
+                    <Icon name="check" size={16} /> {o}
+                  </li>
+                ))}
+              </ul>
+              <p className="hire-process muted">
+                <strong>How it works:</strong> discuss requirements → clear quote &amp; timeline → regular demos as I
+                build → launch, training &amp; support.
+              </p>
+              <div className="hire-actions">
+                <a
+                  href={`https://wa.me/${profile.phone.replace(/D/g, '')}?text=${encodeURIComponent(hireMessage)}`}
+                  target="_blank"
+                  rel="noopener"
+                  className="btn btn-primary"
+                >
+                  <Icon name="chat" size={18} /> Discuss on WhatsApp
+                </a>
+                <a
+                  href={`mailto:${profile.email}?subject=${encodeURIComponent('Custom software project')}&body=${encodeURIComponent(hireMessage)}`}
+                  className="btn btn-ghost"
+                >
+                  <Icon name="mail" size={18} /> Email your requirements
+                </a>
+                <a href="/#projects" className="btn btn-ghost">
+                  <Icon name="briefcase" size={18} /> See my work
+                </a>
               </div>
-              <a href={`mailto:${profile.email}?subject=${encodeURIComponent('Custom tool request')}`} className="btn btn-ghost">
-                <Icon name="mail" size={18} /> Get in touch
-              </a>
             </div>
           </div>
         </section>

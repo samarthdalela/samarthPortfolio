@@ -8,6 +8,9 @@ import LandingPage from './pages/LandingPage.jsx'
 import ImageToPdfPage from './pages/ImageToPdfPage.jsx'
 import PdfToImagePage from './pages/PdfToImagePage.jsx'
 import WordToPdfPage from './pages/WordToPdfPage.jsx'
+import PdfToWordPage from './pages/PdfToWordPage.jsx'
+import ImageToBase64Page from './pages/ImageToBase64Page.jsx'
+import Base64ToImagePage from './pages/Base64ToImagePage.jsx'
 
 // Used at build time by scripts/prerender.mjs to bake each page into its HTML file.
 const pages = {
@@ -18,6 +21,9 @@ const pages = {
   imageToPdf: ImageToPdfPage,
   pdfToImage: PdfToImagePage,
   wordToPdf: WordToPdfPage,
+  pdfToWord: PdfToWordPage,
+  imageToBase64: ImageToBase64Page,
+  base64ToImage: Base64ToImagePage,
 }
 
 export { landings } from './data/landings.js'
