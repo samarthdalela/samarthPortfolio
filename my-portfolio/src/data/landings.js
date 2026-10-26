@@ -5,6 +5,8 @@
 // sitemap from it, vite.config.js builds every page, and the visible content doubles as structured data.
 // Keep it plain JS (no JSX) — it is imported by Node at build time.
 
+import { audioShared } from './audioToText.js'
+
 export const SITE = 'https://samarthdalela.xyz'
 
 const qrShared = [
@@ -55,6 +57,51 @@ const file = (page) => ({
   ...page,
   features: [...page.features, ...fileShared],
 })
+
+// Audio and video transcription (Whisper in the browser), shown with the Audio to Text tool.
+const audio = (page) => ({
+  tool: 'audio',
+  category: 'MultimediaApplication',
+  badges: ['No sign-up', 'No minute limits', 'Hindi & 25+ languages', 'Nothing uploaded'],
+  price: '₹1000/month',
+  ...page,
+  features: [...page.features, ...audioShared],
+})
+
+// One page per Indian language, with Whisper preset to that language and the most accurate model.
+const langAudioPage = ({ code, name, native, script, uses }) =>
+  audio({
+    slug: `${name.toLowerCase()}-audio-to-text`,
+    toolProps: { language: code, model: 'whisper-small' },
+    name: `${name} Audio to Text Converter`,
+    short: `${name} speech to ${native} text`,
+    title: `${name} Audio to Text Free – ${native} Speech & Voice to Text`,
+    description: `Free ${name} audio to text: transcribe ${name} recordings, voice notes and videos to ${native} text, or translate it to English. No upload, no sign-up.`,
+    keywords: `${name.toLowerCase()} audio to text, ${name.toLowerCase()} speech to text, ${name.toLowerCase()} voice to text, ${name.toLowerCase()} transcription, ${name.toLowerCase()} audio to text converter, ${name.toLowerCase()} mp3 to text, ${name.toLowerCase()} video to text, ${name.toLowerCase()} voice typing, ${name.toLowerCase()} to english audio translation, ${native} speech to text`,
+    summary: `Transcribe ${name} recordings — ${uses} — into ${name} text in the ${script} script, or translate the speech straight into English. Preset for ${name} with the most accurate model. Free and private: nothing is uploaded.`,
+    howToTitle: `How to convert ${name} audio to text`,
+    steps: [
+      { name: `Add the ${name} recording`, text: `Drop an MP3, M4A, voice note or video — or record yourself speaking ${name}.` },
+      { name: `${name} is already selected`, text: 'For English text instead, set Output to “Translate to English”.' },
+      { name: 'Transcribe', text: 'Press Transcribe to text. The first run downloads the speech model once.' },
+      { name: 'Copy or download', text: `Correct any word, then copy the ${name} text or download TXT, Word or subtitles.` },
+    ],
+    featuresTitle: `${name} speech to ${native} text`,
+    featuresSub: `For ${uses}.`,
+    features: [
+      { title: `${script} script output`, text: `Get ${name} text (${native}) you can paste into Word, Google Docs or WhatsApp.` },
+      { title: `${name} to English`, text: `Translate ${name} speech directly into English text or English subtitles.` },
+      { title: `${name} subtitles`, text: `Download SRT or VTT subtitles for ${name} YouTube videos and Reels.` },
+    ],
+    faqTitle: `${name} audio to text — FAQ`,
+    faqs: [
+      { q: `How do I convert ${name} audio to text?`, a: `Add the ${name} recording above (${name} is already selected) and press Transcribe to text. Copy the text or download it as TXT or Word.` },
+      { q: `Can it translate ${name} audio to English?`, a: 'Yes. Set Output to “Translate to English” before transcribing, and you get English text.' },
+      { q: `How accurate is ${name} transcription?`, a: `Accuracy for ${name} is lower than for English or Hindi. Clear speech with little background noise works best, and you can fix any word before downloading.` },
+      { q: 'Is it free?', a: 'Yes. Free with no sign-up and no limits — and the audio never leaves your device.' },
+    ],
+    appDescription: `Free online ${name} audio to text converter. Transcribes ${name} speech from audio, voice notes and video to ${script}-script text, or translates it to English, using Whisper AI in the browser with no upload.`,
+  })
 
 const kbPage = ({ kb, slug, uses, faqs }) =>
   resizer({
@@ -1146,6 +1193,213 @@ export const landings = [
     ],
     appDescription: 'Free online TXT to PDF converter. Converts plain-text files or pasted text to PDF with a choice of font, size, page size and margins, in the browser with no upload.',
   }),
+  audio({
+    slug: 'speech-to-text',
+    name: 'Speech to Text Online',
+    short: 'Record your speech, get text',
+    title: 'Speech to Text Online Free – Record & Transcribe, No Sign-up',
+    description:
+      'Free speech to text online: record your speech or add a recording and get text with punctuation in English, Hindi & 25+ languages. No sign-up, no upload.',
+    keywords: 'speech to text, speech to text online, speech to text free, speech to text converter, online speech recognition, talk to text, dictation online, voice typing online, speech to text hindi, speech to text english, transcribe speech, speech recognition free',
+    summary:
+      'Talk and get text. Press Record, speak naturally and turn your speech into clean, punctuated text — or add an existing recording. Great for notes, essays, emails and messages. Free and private: the speech recognition runs on your device.',
+    howToTitle: 'How to convert speech to text online',
+    steps: [
+      { name: 'Press Record', text: 'Click Record from microphone and allow microphone access. Speak clearly at a normal pace.' },
+      { name: 'Stop and choose the language', text: 'Press Stop, then pick the language you spoke — or keep “Detect automatically”.' },
+      { name: 'Transcribe', text: 'Press Transcribe to text. Punctuation and capital letters are added for you.' },
+      { name: 'Use your text', text: 'Copy it into an email, document or chat, or download TXT or Word.' },
+    ],
+    featuresTitle: 'Speech recognition in your browser',
+    featuresSub: 'Write notes, essays, emails and messages by talking.',
+    features: [
+      { title: 'Automatic punctuation', text: 'Full stops, commas, question marks and capitals are added — no need to say “comma”.' },
+      { title: 'Speak in your language', text: 'English, Hindi, Marathi, Tamil, Bengali and more — or translate your speech to English.' },
+      { title: 'Record or upload', text: 'Speak live on the page or add a recording you already have.' },
+    ],
+    faqTitle: 'Speech to text — FAQ',
+    faqs: [
+      { q: 'How do I use speech to text online?', a: 'Press Record from microphone, speak, press Stop and then Transcribe to text. Your speech appears as editable text you can copy or download.' },
+      { q: 'Does it add punctuation?', a: 'Yes. The Whisper model adds full stops, commas, question marks and capital letters automatically.' },
+      { q: 'Is my speech sent to a server?', a: 'No. Unlike most online speech-to-text tools, the recognition runs on your own device, so your voice is never uploaded.' },
+      { q: 'Is it real-time like voice typing?', a: 'Not quite — you record first and then transcribe. This gives better accuracy and punctuation than live typing, and takes only a few seconds for short recordings.' },
+    ],
+    appDescription: 'Free online speech to text tool. Records speech from the microphone or transcribes recordings to punctuated text in English, Hindi and 25+ languages using Whisper AI in the browser, with no upload.',
+  }),
+  audio({
+    slug: 'subtitle-generator',
+    name: 'Subtitle Generator',
+    short: 'Auto SRT & VTT subtitles from video',
+    title: 'Free Subtitle Generator – Auto SRT & VTT Subtitles from Video',
+    description:
+      'Free auto subtitle generator: create SRT & VTT subtitles from any video for YouTube, Reels, CapCut and Premiere Pro. Hindi & 25+ languages, no watermark.',
+    keywords: 'subtitle generator, auto subtitle generator, srt generator, srt file generator, generate subtitles from video, vtt generator, youtube subtitle generator, caption generator, automatic captions, subtitles for reels, hindi subtitle generator, english subtitles for hindi video',
+    summary:
+      'Generate subtitles automatically. Add a video or audio file and get a timed SRT or VTT subtitle file in minutes — in the spoken language or translated to English. Edit any line, then upload it to YouTube or import it into your video editor. Free, no watermark, nothing uploaded.',
+    howToTitle: 'How to generate subtitles for a video',
+    steps: [
+      { name: 'Add your video', text: 'Drag and drop an MP4, WebM or MOV video (or an audio file).' },
+      { name: 'Choose the language', text: 'Pick the spoken language, or “Translate to English” for English subtitles.' },
+      { name: 'Generate', text: 'Press Transcribe to text. Each subtitle line gets its own start and end time.' },
+      { name: 'Download SRT or VTT', text: 'Fix any line, then download the SRT or VTT file for YouTube, CapCut, Premiere Pro or VLC.' },
+    ],
+    featuresTitle: 'Subtitles without the typing',
+    featuresSub: 'For YouTubers, editors, teachers and social media creators.',
+    features: [
+      { title: 'SRT and VTT files', text: 'The two formats every platform and editor accepts — YouTube, Facebook, Vimeo, Premiere Pro, CapCut, DaVinci Resolve and VLC.' },
+      { title: 'Translate subtitles to English', text: 'Turn a Hindi or other-language video into English subtitles in one step.' },
+      { title: 'No watermark', text: 'Your video is never re-encoded or stamped — you only get the subtitle file.' },
+    ],
+    faqTitle: 'Subtitle generator — FAQ',
+    faqs: [
+      { q: 'How do I generate subtitles automatically?', a: 'Add your video above, choose the language and press Transcribe to text. Then download the SRT or VTT file.' },
+      { q: 'How do I add an SRT file to YouTube?', a: 'In YouTube Studio open Subtitles, pick your video, choose Add language → Upload file → With timing, and select the SRT file.' },
+      { q: 'Can I add the subtitles to CapCut or Premiere Pro?', a: 'Yes. Import the SRT file as captions in Premiere Pro, DaVinci Resolve or CapCut desktop, or open it next to the video in VLC.' },
+      { q: 'Does it burn subtitles into the video?', a: 'No — it creates a separate subtitle file, so viewers can switch captions on or off and you can edit them later.' },
+    ],
+    appDescription: 'Free online subtitle generator. Creates SRT and VTT subtitle files from video or audio in English, Hindi and 25+ languages, with optional translation to English, using Whisper AI in the browser with no upload.',
+  }),
+  ...[
+    { code: 'mr', name: 'Marathi', native: 'मराठी', script: 'Devanagari', uses: 'lectures, interviews, news clips and WhatsApp voice notes' },
+    { code: 'bn', name: 'Bengali', native: 'বাংলা', script: 'Bengali', uses: 'lectures, interviews, podcasts and voice notes' },
+    { code: 'ta', name: 'Tamil', native: 'தமிழ்', script: 'Tamil', uses: 'classes, interviews, YouTube videos and voice notes' },
+    { code: 'te', name: 'Telugu', native: 'తెలుగు', script: 'Telugu', uses: 'classes, interviews, YouTube videos and voice notes' },
+    { code: 'gu', name: 'Gujarati', native: 'ગુજરાતી', script: 'Gujarati', uses: 'meetings, interviews, videos and voice notes' },
+    { code: 'ur', name: 'Urdu', native: 'اردو', script: 'Urdu (Nastaliq)', uses: 'interviews, speeches, poetry recitations and voice notes' },
+  ].map(langAudioPage),
+  audio({
+    slug: 'mp3-to-text',
+    name: 'MP3 to Text Converter',
+    short: 'Transcribe MP3 audio to text',
+    title: 'MP3 to Text Converter Free – Transcribe MP3 Audio Online',
+    description:
+      'Free MP3 to text converter: transcribe MP3, WAV and M4A audio to editable text with timestamps in English, Hindi & 25+ languages. No upload, no limits.',
+    keywords: 'mp3 to text, mp3 to text converter, convert mp3 to text, transcribe mp3, mp3 transcription, audio file to text, mp3 to text free, mp3 to text online, mp3 to word, song to text, podcast to text',
+    summary:
+      'Turn any MP3 into text in minutes. Drop the file, pick the language and get an editable transcript with timestamps — download it as TXT, Word or subtitles. Free, unlimited and private: the audio is transcribed on your device.',
+    howToTitle: 'How to convert MP3 to text',
+    steps: [
+      { name: 'Add the MP3', text: 'Drag and drop your MP3 (or WAV, M4A, OGG) into the box, or click to browse.' },
+      { name: 'Choose the language', text: 'Keep “Detect automatically” or pick English, Hindi or another language.' },
+      { name: 'Transcribe', text: 'Press Transcribe to text and watch the transcript appear line by line.' },
+      { name: 'Download the text', text: 'Edit any word, then copy it or download TXT, Word, SRT or VTT.' },
+    ],
+    featuresTitle: 'MP3 to text, done right',
+    featuresSub: 'For podcasts, lectures, interviews, calls and songs saved as MP3.',
+    features: [
+      { title: 'MP3, WAV, M4A & more', text: 'Any audio file your browser can play — MP3, WAV, M4A, AAC, OGG, OPUS and FLAC.' },
+      { title: 'Timestamps on every line', text: 'Click a time to jump to that moment in the audio and check the words.' },
+      { title: 'Word, TXT & subtitles', text: 'Download a Word document, a plain text file or SRT/VTT subtitles.' },
+    ],
+    faqTitle: 'MP3 to text — FAQ',
+    faqs: [
+      { q: 'How do I convert an MP3 to text?', a: 'Add the MP3 above, choose the language and press Transcribe to text. When it finishes, copy the text or download it as TXT or Word.' },
+      { q: 'Is the MP3 to text converter free?', a: 'Yes — completely free with no sign-up, no minute limits and no watermark.' },
+      { q: 'Is my MP3 uploaded?', a: 'No. The speech recognition runs in your browser, so the MP3 never leaves your device.' },
+      { q: 'Can I convert a song to lyrics?', a: 'It works best on speech. Songs with loud music can be transcribed, but expect more mistakes in the lyrics.' },
+    ],
+    appDescription: 'Free online MP3 to text converter. Transcribes MP3, WAV, M4A and other audio files to editable text with timestamps using the Whisper AI model in the browser, with TXT, DOCX, SRT and VTT export and no upload.',
+  }),
+  audio({
+    slug: 'video-to-text',
+    name: 'Video to Text Converter',
+    short: 'Transcribe video & make subtitles',
+    title: 'Video to Text Converter Free – MP4 to Text & SRT Subtitles',
+    description:
+      'Free video to text converter: transcribe MP4, WebM & MOV videos and download SRT/VTT subtitles for YouTube and Reels. Hindi & 25+ languages, no upload.',
+    keywords: 'video to text, video to text converter, transcribe video, mp4 to text, video transcription, youtube video to text, video to srt, subtitle generator, auto subtitles, srt generator, video to text hindi, caption generator',
+    summary:
+      'Get the words out of any video. Add an MP4, WebM or MOV file and get an editable transcript plus ready-to-use SRT and VTT subtitle files — perfect for YouTube, Instagram Reels and online classes. Free and private: nothing is uploaded.',
+    howToTitle: 'How to convert a video to text and subtitles',
+    steps: [
+      { name: 'Add the video', text: 'Drag and drop an MP4, WebM or MOV video, or click to browse.' },
+      { name: 'Choose the language', text: 'Pick the spoken language, or choose “Translate to English” for English subtitles.' },
+      { name: 'Transcribe', text: 'Press Transcribe to text. Every line gets its own start and end time.' },
+      { name: 'Download subtitles', text: 'Download SRT or VTT for YouTube, CapCut or Premiere Pro — or TXT/Word for the text.' },
+    ],
+    featuresTitle: 'Transcripts and subtitles from any video',
+    featuresSub: 'For YouTubers, teachers, students and video editors.',
+    features: [
+      { title: 'SRT & VTT subtitles', text: 'Upload them to YouTube Studio or import them into Premiere Pro, CapCut, DaVinci Resolve or VLC.' },
+      { title: 'English subtitles from Hindi', text: 'Choose “Translate to English” to subtitle a Hindi video in English.' },
+      { title: 'Watch while you edit', text: 'The video plays next to the transcript — click a timestamp to jump there.' },
+    ],
+    faqTitle: 'Video to text — FAQ',
+    faqs: [
+      { q: 'How do I convert a video to text?', a: 'Add the video above, choose the language and press Transcribe to text. Then copy the text or download TXT, Word, SRT or VTT.' },
+      { q: 'How do I add the subtitles to YouTube?', a: 'Download the SRT file, open YouTube Studio → Subtitles → your video → Add language → Upload file, and choose “With timing”.' },
+      { q: 'Can I transcribe a YouTube link?', a: 'This tool works with video files on your device. Download your own video from YouTube Studio first, then add it here.' },
+      { q: 'Is the video uploaded?', a: 'No. Only the sound is read, inside your browser. The video never leaves your device.' },
+    ],
+    appDescription: 'Free online video to text converter and subtitle generator. Transcribes MP4, WebM and MOV video to text and SRT/VTT subtitles in English, Hindi and 25+ languages using Whisper AI in the browser, with no upload.',
+  }),
+  audio({
+    slug: 'voice-to-text',
+    name: 'Voice to Text Converter',
+    short: 'Voice recordings & notes to text',
+    title: 'Voice to Text Converter Free – Voice Note & Recording to Text',
+    description:
+      'Free voice to text: record your voice or add a WhatsApp voice note or voice memo and get text in English, Hindi & 25+ languages. No upload, no sign-up.',
+    keywords: 'voice to text, voice to text converter, voice recording to text, voice note to text, whatsapp voice note to text, voice memo to text, speech to text, speech to text online, record voice to text, voice typing, dictation online, voice to text hindi',
+    summary:
+      'Speak and get text — or turn an existing voice recording, WhatsApp voice note or iPhone voice memo into words. Record right on this page, then copy the text or download it. Free, unlimited and private: your voice never leaves your device.',
+    howToTitle: 'How to convert voice to text',
+    steps: [
+      { name: 'Record or add a file', text: 'Press Record from microphone and speak, or add a voice note (.opus, .ogg, .m4a, .mp3).' },
+      { name: 'Choose the language', text: 'Pick English, Hindi or another language — or let it detect it.' },
+      { name: 'Transcribe', text: 'Press Transcribe to text to turn your speech into words.' },
+      { name: 'Copy or download', text: 'Copy the text into WhatsApp, email or notes, or download TXT or Word.' },
+    ],
+    featuresTitle: 'Your voice, as text',
+    featuresSub: 'Notes, ideas, messages, assignments and meeting recordings.',
+    features: [
+      { title: 'Record on the page', text: 'Use your phone or laptop microphone — no app needed.' },
+      { title: 'WhatsApp voice notes', text: 'Save or share the voice note (.opus/.ogg) to your files and add it here to read it as text.' },
+      { title: 'Hindi voice to text', text: 'Speak in Hindi and get Devanagari text — or translate it to English.' },
+    ],
+    faqTitle: 'Voice to text — FAQ',
+    faqs: [
+      { q: 'How do I convert my voice to text?', a: 'Press Record from microphone, speak, press Stop and then Transcribe to text. Your words appear as editable text you can copy or download.' },
+      { q: 'How do I convert a WhatsApp voice note to text?', a: 'Save or share the voice note to your files (it is an .opus or .ogg file), add it in the box above and press Transcribe to text.' },
+      { q: 'Is my voice recording uploaded?', a: 'No. The recording and the speech recognition both stay in your browser on your device.' },
+      { q: 'Does it work in Hindi?', a: 'Yes. Choose Hindi and the “Most accurate” option for the best Hindi voice to text results.' },
+    ],
+    appDescription: 'Free online voice to text converter. Records from the microphone or transcribes voice recordings, WhatsApp voice notes and voice memos to text in English, Hindi and 25+ languages using Whisper AI in the browser, with no upload.',
+  }),
+  audio({
+    slug: 'hindi-audio-to-text',
+    toolProps: { language: 'hi', model: 'whisper-small' },
+    name: 'Hindi Audio to Text Converter',
+    short: 'Hindi speech to Devanagari text',
+    title: 'Hindi Audio to Text Free – हिंदी ऑडियो से टेक्स्ट Online',
+    description:
+      'Free Hindi audio to text: transcribe Hindi MP3, voice notes & videos to Devanagari text, or translate Hindi speech to English. Whisper AI, no upload.',
+    keywords: 'hindi audio to text, hindi speech to text, hindi voice to text, hindi audio to text converter, hindi transcription, hindi mp3 to text, hindi video to text, audio to text in hindi, hindi voice typing, hindi to english audio translation, हिंदी ऑडियो से टेक्स्ट',
+    summary:
+      'Transcribe Hindi recordings — lectures, interviews, voice notes, videos — into Hindi text in Devanagari, or translate the Hindi speech straight into English. Preset for Hindi with the most accurate model. Free and private: nothing is uploaded.',
+    howToTitle: 'How to convert Hindi audio to text',
+    steps: [
+      { name: 'Add the Hindi recording', text: 'Drop an MP3, M4A, voice note or video — or record yourself speaking Hindi.' },
+      { name: 'Hindi is already selected', text: 'For English text instead, set Output to “Translate to English”.' },
+      { name: 'Transcribe', text: 'Press Transcribe to text. The first run downloads the Hindi-capable model once.' },
+      { name: 'Copy or download', text: 'Correct any word, then copy the Hindi text or download TXT, Word or subtitles.' },
+    ],
+    featuresTitle: 'Made for Hindi speech',
+    featuresSub: 'For students, teachers, journalists, YouTubers and anyone who speaks Hindi.',
+    features: [
+      { title: 'Devanagari output', text: 'Get proper Hindi text (हिन्दी) that you can paste into Word, Google Docs or WhatsApp.' },
+      { title: 'Hindi to English', text: 'Translate Hindi speech directly into English text or English subtitles.' },
+      { title: 'Hinglish recordings', text: 'Mixed Hindi-English speech works too; English words may be written in Devanagari.' },
+    ],
+    faqTitle: 'Hindi audio to text — FAQ',
+    faqs: [
+      { q: 'How do I convert Hindi audio to text?', a: 'Add the Hindi recording above (Hindi is already selected) and press Transcribe to text. Copy the Hindi text or download it as TXT or Word.' },
+      { q: 'Can it translate Hindi audio to English?', a: 'Yes. Set Output to “Translate to English” before transcribing, and you get English text.' },
+      { q: 'How accurate is Hindi transcription?', a: 'With the “Most accurate” option (selected by default here) clear Hindi speech transcribes well. Check names and technical words before using the text.' },
+      { q: 'Is it free?', a: 'Yes. Free with no sign-up and no limits — and the audio never leaves your device.' },
+    ],
+    appDescription: 'Free online Hindi audio to text converter. Transcribes Hindi speech from audio, voice notes and video to Devanagari text, or translates it to English, using Whisper AI in the browser with no upload.',
+  }),
 ]
 
 export const landingUrl = (p) => `${SITE}/${p.slug}/`
@@ -1163,12 +1417,17 @@ const hubs = [
   { href: '/pdf-to-word/', icon: 'file', name: 'PDF to Word', text: 'Turn a PDF into editable DOCX' },
   { href: '/image-to-base64/', icon: 'code', name: 'Image to Base64', text: 'Image to data URI, HTML or CSS' },
   { href: '/base64-to-image/', icon: 'code', name: 'Base64 to Image', text: 'Decode Base64 and download' },
+  { href: '/audio-to-text/', icon: 'mic', name: 'Audio to Text', text: 'Transcribe audio & video free' },
 ]
 
 export function moreTools(currentPath) {
   const links = [
     ...hubs,
-    ...landings.map((p) => ({ href: `/${p.slug}/`, icon: { qr: 'qr', file: 'file' }[p.tool] || 'image', name: p.name, text: p.short })),
+    ...landings.map((p) => ({ href: `/${p.slug}/`, icon: { qr: 'qr', file: 'file', audio: 'mic' }[p.tool] || 'image', name: p.name, text: p.short })),
   ]
-  return { title: 'More free tools', links: links.filter((l) => l.href !== currentPath) }
+  const current = links.find((l) => l.href === currentPath)
+  const others = links.filter((l) => l.href !== currentPath)
+  // Closest tools first (same icon = same family), so related pages link to each other most prominently.
+  const related = current ? others.filter((l) => l.icon === current.icon) : []
+  return { title: 'More free tools', links: [...related, ...others.filter((l) => !related.includes(l))] }
 }

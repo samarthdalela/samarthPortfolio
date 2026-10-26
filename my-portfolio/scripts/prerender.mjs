@@ -17,6 +17,7 @@ const pages = {
   pdfToWord: 'dist/pdf-to-word/index.html',
   imageToBase64: 'dist/image-to-base64/index.html',
   base64ToImage: 'dist/base64-to-image/index.html',
+  audioToText: 'dist/audio-to-text/index.html',
 }
 
 function bake(file, body) {

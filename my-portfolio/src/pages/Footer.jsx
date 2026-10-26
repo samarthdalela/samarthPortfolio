@@ -21,6 +21,7 @@ function Footer() {
             <a href="/pdf-to-image/">PDF to Image Converter</a> ·{' '}
             <a href="/word-to-pdf/">Word to PDF Converter</a> ·{' '}
             <a href="/pdf-to-word/">PDF to Word Converter</a> ·{' '}
+            <a href="/audio-to-text/">Audio to Text Converter</a> ·{' '}
             <a href="/videos/">Video Lectures</a> ·{' '}
             <a href="/image-to-base64/">Image to Base64</a>
           </p>

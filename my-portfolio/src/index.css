@@ -3481,3 +3481,126 @@ a.tool-card:hover {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- Audio to Text tool ---------- */
+.att-recording {
+  animation: att-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes att-pulse {
+  50% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.25); }
+}
+
+.att-player {
+  width: 100%;
+  max-height: 220px;
+  border-radius: 12px;
+  background: #000;
+}
+
+audio.att-player {
+  background: transparent;
+}
+
+.att-progress {
+  display: grid;
+  gap: 8px;
+}
+
+.att-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.att-bar span {
+  display: block;
+  height: 100%;
+  background: var(--gradient);
+  transition: width 0.3s;
+}
+
+.att-result {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.att-result-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-h);
+}
+
+.att-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.att-toggle input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+}
+
+.att-lines {
+  max-height: 520px;
+}
+
+.att-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.att-time {
+  flex-shrink: 0;
+  min-width: 56px;
+  padding: 7px 8px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font: 500 13px var(--mono);
+  cursor: pointer;
+}
+
+.att-line textarea {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-h);
+  font: inherit;
+  line-height: 1.5;
+  resize: none;
+  field-sizing: content;
+}
+
+.att-line textarea:hover {
+  border-color: var(--border);
+}
+
+.att-line textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--bg);
+}
+
+.att-downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.att-downloads .btn {
+  padding: 8px 14px;
+  font-size: 14px;
+}

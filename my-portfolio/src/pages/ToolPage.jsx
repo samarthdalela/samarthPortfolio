@@ -20,6 +20,7 @@ function buildStructuredData({ name, url, app, steps, howToTitle, faqs }) {
         browserRequirements: 'Requires JavaScript',
         description: app.description,
         featureList: app.featureList,
+        isAccessibleForFree: true,
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR' },
         author: { '@type': 'Person', '@id': 'https://samarthdalela.xyz/#person', name: 'Samarth Dalela' },
       },

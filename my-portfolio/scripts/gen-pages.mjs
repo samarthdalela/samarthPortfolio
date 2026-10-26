@@ -13,6 +13,7 @@ const assets = {
   qr: { icon: 'qr', touch: 'apple-touch-qr.png', og: 'og-qr.jpg' },
   resizer: { icon: 'resizer', touch: 'apple-touch-resizer.png', og: 'og-image.jpg' },
   file: { icon: 'pdf', touch: 'apple-touch-icon.png', og: 'og-image.jpg', svgOnly: true },
+  audio: { icon: 'audio', touch: 'apple-touch-icon.png', og: 'og-image.jpg', svgOnly: true },
 }
 
 function html(p) {

@@ -89,6 +89,17 @@ export const categories = [
     ],
   },
   {
+    id: 'audio-tools',
+    icon: 'mic',
+    title: 'Audio & video to text',
+    short: 'Audio to text',
+    sub: 'Transcribe recordings, voice notes and videos — and make subtitles — with Whisper AI on your device.',
+    tools: [
+      { href: '/audio-to-text/', name: 'Audio to Text Converter', text: 'Transcribe any recording to text' },
+      ...landings.filter((p) => p.tool === 'audio').map(page),
+    ],
+  },
+  {
     id: 'apps',
     icon: 'star',
     title: 'Apps',
@@ -123,7 +134,7 @@ export const servicesFaqs = [
   },
   {
     q: 'Which file conversions are supported?',
-    a: 'PDF to Word, Excel, PowerPoint and images; Word, Excel, PowerPoint, RTF and TXT to PDF; Word to HTML; Excel to CSV and CSV to Excel; ODT to DOCX; JPG, PNG, WebP, HEIC, SVG, GIF and BMP image conversions; and image to Base64 and back.',
+    a: 'PDF to Word, Excel, PowerPoint and images; Word, Excel, PowerPoint, RTF and TXT to PDF; Word to HTML; Excel to CSV and CSV to Excel; ODT to DOCX; JPG, PNG, WebP, HEIC, SVG, GIF and BMP image conversions; image to Base64 and back; and audio or video to text (transcription) with SRT subtitles.',
   },
   {
     q: 'Can I reduce a photo to 20 KB, 50 KB or 100 KB for an online form?',

@@ -246,6 +246,15 @@ const toolGroups = [
     ],
   },
   {
+    icon: 'mic',
+    title: 'Audio to text',
+    tools: [
+      { name: 'Audio to Text', href: '/audio-to-text/' },
+      { name: 'Video to Text', href: '/video-to-text/' },
+      { name: 'Hindi Audio to Text', href: '/hindi-audio-to-text/' },
+    ],
+  },
+  {
     icon: 'gauge',
     title: 'Apps',
     tools: [

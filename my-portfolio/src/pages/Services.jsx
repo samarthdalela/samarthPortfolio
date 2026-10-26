@@ -99,7 +99,7 @@ function Services() {
             </h1>
             <p className="hero-summary">
               Convert PDF to Word, Excel or PowerPoint, turn documents and photos into PDFs, resize images to any KB,
-              convert HEIC, WebP and PNG, and make UPI or Wi-Fi QR codes. Every tool runs in your browser, so your files
+              convert HEIC, WebP and PNG, transcribe audio and video to text, and make UPI or Wi-Fi QR codes. Every tool runs in your browser, so your files
               are never uploaded — free, kept free by support from people like you.
             </p>
             <p className="tools-stats">
