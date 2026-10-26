@@ -21,7 +21,7 @@ function AudioToTextPage() {
       faqTitle="Audio to text — frequently asked questions"
       faqs={audioFaqs}
       related={{
-        href: 'https://wispernotes.netlify.app/',
+        href: 'https://whispersnotes.netlify.app/',
         text: 'Transcribing a meeting? Get the summary, action items and Minutes of Meeting (MoM) with WisperNotes — free',
       }}
       more={moreTools('/audio-to-text/')}

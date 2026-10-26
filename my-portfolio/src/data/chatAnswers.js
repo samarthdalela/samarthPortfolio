@@ -109,7 +109,7 @@ export function answerQuestion(question) {
       `Audio to Text (transcribe audio, video & voice notes, Hindi supported): ${SITE}/audio-to-text/`,
       `PDF & document converters (PDF to Excel, Excel to PDF, PDF to PowerPoint, PowerPoint to PDF, Word to HTML, Excel to CSV, CSV to Excel, ODT to DOCX, RTF to PDF, TXT to PDF): ${SITE}/services/`,
       `Image format converters (HEIC, SVG, WebP, GIF, BMP → JPG/PNG/WebP): ${SITE}/services/`,
-      'WisperNotes app (meeting transcription & Minutes of Meeting): https://wispernotes.netlify.app/',
+      'WisperNotes app (meeting transcription & Minutes of Meeting): https://whispersnotes.netlify.app/',
       'Birthday Reminder app: https://impreminder.netlify.app/',
       'Website Monitor app: https://monitorwebsite.netlify.app/',
     ])}`

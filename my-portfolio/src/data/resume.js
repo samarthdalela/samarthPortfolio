@@ -109,7 +109,7 @@ export const projects = [
     stack: ['React', 'Vite', 'PWA', 'Whisper AI'],
     categories: ['AI', 'PWA'],
     featured: true,
-    links: [{ label: 'wispernotes.netlify.app', url: 'https://wispernotes.netlify.app/' }],
+    links: [{ label: 'whispersnotes.netlify.app', url: 'https://whispersnotes.netlify.app/' }],
     summary: 'Record meetings and turn them into transcripts, summaries, action items and Minutes of Meeting (MoM) with Whisper AI.',
     points: [
       'Records meetings and transcribes them with the Whisper AI speech recognition model',

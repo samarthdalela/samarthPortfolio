@@ -114,7 +114,7 @@ export const categories = [
     short: 'Apps',
     sub: 'Install them on your phone like an app.',
     tools: [
-      { href: 'https://wispernotes.netlify.app/', external: true, emoji: '🎙️', name: 'WisperNotes', text: 'Meeting transcripts & Minutes of Meeting (MoM)' },
+      { href: 'https://whispersnotes.netlify.app/', external: true, emoji: '🎙️', name: 'WisperNotes', text: 'Meeting transcripts & Minutes of Meeting (MoM)' },
       { href: 'https://impreminder.netlify.app/', external: true, emoji: '🎂', name: 'Birthday Reminder', text: 'Never miss a birthday or anniversary' },
       { href: 'https://monitorwebsite.netlify.app/', external: true, emoji: '🟢', name: 'Website Monitor', text: 'Get alerted when a site goes down' },
     ],

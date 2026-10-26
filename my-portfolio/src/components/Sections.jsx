@@ -258,7 +258,7 @@ const toolGroups = [
     icon: 'gauge',
     title: 'Apps',
     tools: [
-      { name: 'WisperNotes (meeting minutes)', href: 'https://wispernotes.netlify.app/', external: true },
+      { name: 'WisperNotes (meeting minutes)', href: 'https://whispersnotes.netlify.app/', external: true },
       { name: 'Birthday Reminder', href: 'https://impreminder.netlify.app/', external: true },
       { name: 'Website Monitor', href: 'https://monitorwebsite.netlify.app/', external: true },
     ],
