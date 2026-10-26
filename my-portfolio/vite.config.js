@@ -32,6 +32,7 @@ export default defineConfig(({ mode }) => ({
       input: {
         main: 'index.html',
         services: 'services/index.html',
+        videos: 'videos/index.html',
         qr: 'qr-code-generator/index.html',
         resizer: 'image-resizer/index.html',
         imageToPdf: 'image-to-pdf/index.html',

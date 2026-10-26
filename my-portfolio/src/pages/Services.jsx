@@ -6,7 +6,7 @@ import Support from '../components/Support'
 import SupportPopup from '../components/SupportPopup'
 import { useActiveSection, useRevealOnScroll } from '../hooks'
 import { profile } from '../data/resume'
-import { categories, featured, toolCount } from '../data/tools'
+import { SERVICES_URL, allTools, categories, featured, servicesFaqs, toolCount } from '../data/tools'
 
 // Custom software offered as a freelancer, shown in the "Hire me" box.
 const offerings = [
@@ -29,6 +29,48 @@ Main features:
 Deadline:
 Budget:`
 
+// Structured data for search engines, built from the same catalog and FAQ that the page shows.
+const PAGE_DESCRIPTION =
+  'Free online PDF, image and QR code tools: PDF to Word, Excel and PowerPoint, Word to PDF, image converters, image resizer and QR code generators. No sign-up, nothing uploaded.'
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      '@id': `${SERVICES_URL}#page`,
+      url: SERVICES_URL,
+      name: 'Free online PDF, image & QR code tools',
+      description: PAGE_DESCRIPTION,
+      inLanguage: 'en-IN',
+      isPartOf: { '@id': 'https://samarthdalela.xyz/#website' },
+      author: { '@id': 'https://samarthdalela.xyz/#person' },
+      mainEntity: { '@id': `${SERVICES_URL}#tools` },
+      breadcrumb: { '@id': `${SERVICES_URL}#breadcrumb` },
+    },
+    {
+      '@type': 'ItemList',
+      '@id': `${SERVICES_URL}#tools`,
+      name: 'Free online tools',
+      numberOfItems: allTools.length,
+      itemListElement: allTools.map((t, i) => ({ '@type': 'ListItem', position: i + 1, url: t.url, name: t.name })),
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${SERVICES_URL}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Samarth Dalela', item: 'https://samarthdalela.xyz/' },
+        { '@type': 'ListItem', position: 2, name: 'Free tools', item: SERVICES_URL },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${SERVICES_URL}#faq`,
+      mainEntity: servicesFaqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+    },
+  ],
+}
+
 const categoryIds = categories.map((c) => c.id)
 
 function Services() {
@@ -50,14 +92,15 @@ function Services() {
           </div>
           <div className="container services-hero-inner">
             <span className="badge">
-              <span className="pulse" /> 100% free · no sign-up
+              <span className="pulse" /> 100% free · no sign-up · by Samarth Dalela
             </span>
             <h1>
-              Free tools by <span className="gradient-text">Samarth Dalela</span>
+              Free online <span className="gradient-text">PDF, image &amp; QR code</span> tools
             </h1>
             <p className="hero-summary">
-              Handy, privacy-friendly tools that run entirely in your browser. Use them as much as you like — free of
-              cost, kept free by support from people like you.
+              Convert PDF to Word, Excel or PowerPoint, turn documents and photos into PDFs, resize images to any KB,
+              convert HEIC, WebP and PNG, and make UPI or Wi-Fi QR codes. Every tool runs in your browser, so your files
+              are never uploaded — free, kept free by support from people like you.
             </p>
             <p className="tools-stats">
               <strong>{toolCount} free tools</strong> · No sign-up · Your files never leave your device
@@ -94,7 +137,7 @@ function Services() {
               <div className="cat-head">
                 <span className="tools-teaser-icon" aria-hidden="true"><Icon name="star" /></span>
                 <div>
-                  <h2>Most used</h2>
+                  <h2>Most popular free tools</h2>
                   <p className="muted">The favourites — each would normally cost a lifetime licence. Here they’re free.</p>
                 </div>
               </div>
@@ -128,9 +171,10 @@ function Services() {
                     <div className="cat-head">
                       <span className="tools-teaser-icon" aria-hidden="true"><Icon name={c.icon} /></span>
                       <div>
-                        <h2>
-                          {c.title} <span className="cat-count">{c.shown.length}</span>
-                        </h2>
+                        <div className="cat-title">
+                          <h2>{c.title}</h2>
+                          <span className="cat-count" aria-label={`${c.shown.length} tools`}>{c.shown.length}</span>
+                        </div>
                         <p className="muted">{c.sub}</p>
                       </div>
                     </div>
@@ -172,6 +216,26 @@ function Services() {
               <a href={`mailto:${profile.email}?subject=${encodeURIComponent('Free tool idea')}`} className="btn btn-ghost">
                 <Icon name="mail" size={18} /> Suggest a tool
               </a>
+            </div>
+          </div>
+        </section>
+
+        <section className="section section-alt" id="faq">
+          <div className="container faq-wrap">
+            <div className="section-head reveal">
+              <span className="eyebrow">FAQ</span>
+              <h2>Free online tools — frequently asked questions</h2>
+            </div>
+            <div className="faq-list">
+              {servicesFaqs.map((f) => (
+                <details key={f.q} className="faq card reveal">
+                  <summary>
+                    <h3>{f.q}</h3>
+                    <Icon name="chevron" size={18} />
+                  </summary>
+                  <p>{f.a}</p>
+                </details>
+              ))}
             </div>
           </div>
         </section>
@@ -226,6 +290,10 @@ function Services() {
       </main>
       <Footer />
       <SupportPopup />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }}
+      />
     </>
   )
 }

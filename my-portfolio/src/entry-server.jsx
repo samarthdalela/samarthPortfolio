@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { renderToString } from 'react-dom/server'
 import App from './App.jsx'
 import Services from './pages/Services.jsx'
+import Videos from './pages/Videos.jsx'
 import QrPage from './pages/QrPage.jsx'
 import ImageResizerPage from './pages/ImageResizerPage.jsx'
 import LandingPage from './pages/LandingPage.jsx'
@@ -16,6 +17,7 @@ import Base64ToImagePage from './pages/Base64ToImagePage.jsx'
 const pages = {
   home: App,
   services: Services,
+  videos: Videos,
   qr: QrPage,
   resizer: ImageResizerPage,
   imageToPdf: ImageToPdfPage,

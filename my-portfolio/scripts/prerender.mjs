@@ -8,6 +8,7 @@ const { render, renderLanding, landings } = await import(pathToFileURL(`${root}d
 const pages = {
   home: 'dist/index.html',
   services: 'dist/services/index.html',
+  videos: 'dist/videos/index.html',
   qr: 'dist/qr-code-generator/index.html',
   resizer: 'dist/image-resizer/index.html',
   imageToPdf: 'dist/image-to-pdf/index.html',

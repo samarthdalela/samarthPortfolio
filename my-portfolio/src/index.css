@@ -3399,3 +3399,85 @@ a.tool-card:hover {
     scroll-snap-align: start;
   }
 }
+
+.cat-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ---------- Video lectures page ---------- */
+.video-list {
+  display: grid;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.video-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.video-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #000;
+}
+
+.video-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.video-body {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+.video-body h3 {
+  font-size: 22px;
+}
+
+.video-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.video-topic {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.video-series {
+  background: rgba(34, 197, 94, 0.14);
+  color: #22c55e;
+}
+
+.video-points {
+  grid-template-columns: 1fr;
+  margin: 0;
+}
+
+.video-body .project-link {
+  justify-self: start;
+}
+
+@media (max-width: 860px) {
+  .video-card {
+    grid-template-columns: 1fr;
+  }
+}

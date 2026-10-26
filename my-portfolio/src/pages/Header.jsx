@@ -13,14 +13,14 @@ const links = [
 ]
 const sectionIds = ['home', ...links.map((l) => l.id)]
 
-// `page` is 'home' or 'services'; links use "/#id" so they also work from the services page.
+// `page` is 'home', 'services' or 'videos'; links use "/#id" so they also work from the other pages.
 function Header({ page = 'home' }) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [progress, setProgress] = useState(0)
   const [, toggleTheme] = useTheme()
   const activeSection = useActiveSection(sectionIds)
-  const active = page === 'services' ? 'services' : activeSection
+  const active = page === 'home' ? activeSection : page
 
   useEffect(() => {
     const onScroll = () => {
@@ -63,6 +63,13 @@ function Header({ page = 'home' }) {
             onClick={() => setOpen(false)}
           >
             Free tools
+          </a>
+          <a
+            href="/videos/"
+            className={`nav-services ${active === 'videos' ? 'is-active' : ''}`}
+            onClick={() => setOpen(false)}
+          >
+            Videos
           </a>
           <a href={profile.resume} download className="btn btn-primary nav-cta" onClick={() => setOpen(false)}>
             <Icon name="download" size={16} /> Resume

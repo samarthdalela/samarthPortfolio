@@ -102,3 +102,43 @@ export const categories = [
 ]
 
 export const toolCount = new Set(categories.flatMap((c) => c.tools.map((t) => t.href))).size
+
+export const SERVICES_URL = 'https://samarthdalela.xyz/services/'
+
+// Every tool once, with absolute URLs — for the page's structured data (ItemList).
+export const allTools = [...new Map(categories.flatMap((c) => c.tools).map((t) => [t.href, t])).values()].map((t) => ({
+  ...t,
+  url: t.external ? t.href : `https://samarthdalela.xyz${t.href}`,
+}))
+
+// Shown on the page and used as FAQPage structured data (they must match).
+export const servicesFaqs = [
+  {
+    q: 'Are these online tools really free?',
+    a: 'Yes. Every tool is completely free with no sign-up, no watermark, no ads and no daily limits. They are kept free by optional support from people who find them useful.',
+  },
+  {
+    q: 'Are my files uploaded to a server?',
+    a: 'No. All conversions — PDF, Word, Excel, PowerPoint, images and QR codes — run entirely in your browser, so your files never leave your device. That makes the tools safe for resumes, bank statements, ID cards and other private documents.',
+  },
+  {
+    q: 'Which file conversions are supported?',
+    a: 'PDF to Word, Excel, PowerPoint and images; Word, Excel, PowerPoint, RTF and TXT to PDF; Word to HTML; Excel to CSV and CSV to Excel; ODT to DOCX; JPG, PNG, WebP, HEIC, SVG, GIF and BMP image conversions; and image to Base64 and back.',
+  },
+  {
+    q: 'Can I reduce a photo to 20 KB, 50 KB or 100 KB for an online form?',
+    a: 'Yes. The image resizer can compress a photo to any target size in KB, and there are ready-made pages for 20 KB, 50 KB and 100 KB and for passport-size photos (35×45 mm).',
+  },
+  {
+    q: 'Do the tools work on mobile phones?',
+    a: 'Yes. They work in Chrome, Safari, Edge and Firefox on Android, iPhone, Windows, Mac and Linux. There is nothing to install.',
+  },
+  {
+    q: 'Is there a file size or page limit?',
+    a: 'There is no fixed limit, because files are processed on your own device. Very large files depend on your device’s memory — a phone may be slower than a computer for big PDFs or hundreds of photos.',
+  },
+  {
+    q: 'Can you build a tool I need?',
+    a: 'Yes — suggest it with the “Suggest a tool” button. I also build custom software such as CMS, LMS and CRM systems for businesses.',
+  },
+]
