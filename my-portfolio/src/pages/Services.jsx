@@ -31,7 +31,7 @@ Budget:`
 
 // Structured data for search engines, built from the same catalog and FAQ that the page shows.
 const PAGE_DESCRIPTION =
-  'Free online PDF, image and QR code tools: PDF to Word, Excel and PowerPoint, Word to PDF, image converters, image resizer and QR code generators. No sign-up, nothing uploaded.'
+  'Free online PDF, image, QR code and audio to text tools: PDF to Word, Excel and PowerPoint, Word to PDF, image converters, image resizer, QR code generators and audio & video transcription. No sign-up, nothing uploaded.'
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -40,7 +40,7 @@ const structuredData = {
       '@type': 'CollectionPage',
       '@id': `${SERVICES_URL}#page`,
       url: SERVICES_URL,
-      name: 'Free online PDF, image & QR code tools',
+      name: 'Free online PDF, image, QR code & audio to text tools',
       description: PAGE_DESCRIPTION,
       inLanguage: 'en-IN',
       isPartOf: { '@id': 'https://samarthdalela.xyz/#website' },
@@ -95,7 +95,7 @@ function Services() {
               <span className="pulse" /> 100% free · no sign-up · by Samarth Dalela
             </span>
             <h1>
-              Free online <span className="gradient-text">PDF, image &amp; QR code</span> tools
+              Free online <span className="gradient-text">PDF, image, QR code &amp; audio to text</span> tools
             </h1>
             <p className="hero-summary">
               Convert PDF to Word, Excel or PowerPoint, turn documents and photos into PDFs, resize images to any KB,
@@ -138,14 +138,15 @@ function Services() {
                 <span className="tools-teaser-icon" aria-hidden="true"><Icon name="star" /></span>
                 <div>
                   <h2>Most popular free tools</h2>
-                  <p className="muted">The favourites — each would normally cost a lifetime licence. Here they’re free.</p>
+                  <p className="muted">The favourites — each would normally cost a licence or a subscription. Here they’re free.</p>
                 </div>
               </div>
               <div className="featured-grid">
                 {featured.map((t) => (
-                  <a key={t.href} href={t.href} className="tool-card card reveal">
+                  <a key={t.href} href={t.href} className={`tool-card card reveal ${t.highlight ? 'tool-card-highlight' : ''}`}>
                     <div className="tool-card-top">
                       <span className="skill-icon"><Icon name={t.icon} /></span>
+                      {t.highlight && <span className="tool-card-new">{t.highlight}</span>}
                       <span className="price-tag-inline">
                         <span className="price-old">{t.price}</span> <strong>FREE</strong>
                       </span>

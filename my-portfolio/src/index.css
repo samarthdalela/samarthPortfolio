@@ -3213,12 +3213,35 @@ a.tool-card:hover {
 
 .featured-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
 }
 
 .featured-grid .tool-card h3 {
   font-size: 19px;
+}
+
+/* A featured card spanning two columns, for a new or headline tool. */
+.featured-grid .tool-card-highlight {
+  grid-column: span 2;
+  border-color: var(--accent);
+  background: linear-gradient(135deg, var(--accent-soft), transparent 70%), var(--surface);
+}
+
+.featured-grid .tool-card-highlight h3 {
+  font-size: 24px;
+}
+
+.tool-card-new {
+  margin-left: auto;
+  margin-right: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--gradient);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .cat-section {
@@ -3356,6 +3379,9 @@ a.tool-card:hover {
   .featured-grid {
     grid-template-columns: 1fr;
   }
+  .featured-grid .tool-card-highlight {
+    grid-column: auto;
+  }
   .tool-tiles {
     grid-template-columns: 1fr;
   }
@@ -3397,6 +3423,9 @@ a.tool-card:hover {
   }
   .featured-grid .tool-card {
     scroll-snap-align: start;
+  }
+  .featured-grid .tool-card-highlight {
+    grid-column: auto;
   }
 }
 

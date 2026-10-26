@@ -7,8 +7,16 @@ import { landings } from './landings'
 const page = (p) => ({ href: `/${p.slug}/`, name: p.name, text: p.short })
 const isConverter = (p) => p.slug.endsWith('-converter') || p.slug.startsWith('convert-')
 
-// Shown first, as large cards with their price.
+// Shown first, as large cards with their price. `highlight` makes a card wide, with a "New" tag.
 export const featured = [
+  {
+    href: '/audio-to-text/',
+    icon: 'mic',
+    price: '₹1000/month',
+    highlight: 'New · AI',
+    name: 'Audio to Text Converter',
+    text: 'Transcribe MP3, voice notes and videos to text in Hindi, English and 25+ languages — with timestamps and SRT subtitles. Runs on your device, nothing uploaded.',
+  },
   {
     href: '/pdf-to-word/',
     icon: 'file',
@@ -40,6 +48,17 @@ export const featured = [
 ]
 
 export const categories = [
+  {
+    id: 'audio-tools',
+    icon: 'mic',
+    title: 'Audio & video to text',
+    short: 'Audio to text',
+    sub: 'Transcribe recordings, voice notes and videos — and make subtitles — with Whisper AI on your device.',
+    tools: [
+      { href: '/audio-to-text/', name: 'Audio to Text Converter', text: 'Transcribe any recording to text' },
+      ...landings.filter((p) => p.tool === 'audio').map(page),
+    ],
+  },
   {
     id: 'pdf-tools',
     icon: 'file',
@@ -86,17 +105,6 @@ export const categories = [
     tools: [
       { href: '/qr-code-generator/', name: 'QR Code Generator', text: 'Every QR code type in one place' },
       ...landings.filter((p) => p.tool === 'qr').map(page),
-    ],
-  },
-  {
-    id: 'audio-tools',
-    icon: 'mic',
-    title: 'Audio & video to text',
-    short: 'Audio to text',
-    sub: 'Transcribe recordings, voice notes and videos — and make subtitles — with Whisper AI on your device.',
-    tools: [
-      { href: '/audio-to-text/', name: 'Audio to Text Converter', text: 'Transcribe any recording to text' },
-      ...landings.filter((p) => p.tool === 'audio').map(page),
     ],
   },
   {
