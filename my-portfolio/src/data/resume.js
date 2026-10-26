@@ -105,6 +105,21 @@ export const projects = [
     ],
   },
   {
+    title: 'WisperNotes — Meeting Transcription & MoM Generator',
+    stack: ['React', 'Vite', 'PWA', 'Whisper AI'],
+    categories: ['AI', 'PWA'],
+    featured: true,
+    links: [{ label: 'wispernotes.netlify.app', url: 'https://wispernotes.netlify.app/' }],
+    summary: 'Record meetings and turn them into transcripts, summaries, action items and Minutes of Meeting (MoM) with Whisper AI.',
+    points: [
+      'Records meetings and transcribes them with the Whisper AI speech recognition model',
+      'Generates a summary, action items and ready-to-share Minutes of Meeting (MoM)',
+      'Installable PWA for phone and desktop, with light and dark themes',
+      'Free to use with no usage limits; currently in public testing',
+      'Built with React + Vite and deployed on Netlify',
+    ],
+  },
+  {
     title: 'Website Monitor — Server Uptime PWA',
     stack: ['React', 'Vite', 'PWA', 'Service Worker', 'Notifications'],
     categories: ['PWA', 'DevOps'],
